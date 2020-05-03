@@ -3,7 +3,7 @@
     <h1>{{ message }}</h1>
     <p>Search teams here:<input type="text" v-model="teamFilter"></p>
     <div v-bind:key="franchise.id" v-for="franchise in filterBy(franchises, teamFilter, 'team_name')">
-      <h2>{{ franchise.team_name }}</h2>
+      <h2><a v-bind:href="`/franchises/${franchise.id}`">{{ franchise.team_name }}</a></h2>
       <h4>{{ franchise.team_abbr }}</h4>
     </div>
   </div>

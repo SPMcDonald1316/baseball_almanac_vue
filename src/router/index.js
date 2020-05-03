@@ -1,7 +1,8 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Home from '../views/Home.vue';
-import Franchises from '../views/FranchisesIndex.vue';
+import FranchisesIndex from '../views/FranchisesIndex.vue';
+import FranchisesShow from '../views/FranchisesShow.vue';
 
 Vue.use(VueRouter);
 
@@ -21,8 +22,13 @@ const routes = [
   },
   {
     path: '/franchises',
-    name: 'Franchises',
-    component: Franchises
+    name: 'franchises-index',
+    component: FranchisesIndex
+  },
+  {
+    path: '/franchises/:id',
+    name: 'franchises-show',
+    component: FranchisesShow
   }
 ];
 
