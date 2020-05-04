@@ -9,10 +9,12 @@
           <th>Wins</th>
           <th>Losses</th>
         </thead>
-          <tr v-for="stat in franchise.stats">
-            <td>{{stat.year_id}}</td>
+          <tr v-bind:key="stat.id" v-for="stat in franchise.stats">
+            <td>{{stat.year_id}}</td> <!-- create link to hitting/pitching/fielding stats for given year? -->
             <td>{{stat.w}}</td>
             <td>{{stat.l}}</td>
+            <!-- decide what else to display on this page as opposed to stats pages
+            maybe winning pct, division/league/world series titles -->
           </tr>
       </table>
     </div>
