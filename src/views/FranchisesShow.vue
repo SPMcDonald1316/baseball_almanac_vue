@@ -1,5 +1,5 @@
 <template>
-  <div class="franchises">
+  <div class="franchises-show">
     <h1>{{ message }}</h1>
     <div>
       <h2>{{ franchise.team_name }}</h2>

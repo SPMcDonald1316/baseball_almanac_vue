@@ -1,5 +1,5 @@
 <template>
-  <div class="franchises">
+  <div class="franchises-index">
     <h1>{{ message }}</h1>
     <p>Search teams here:<input type="text" v-model="teamFilter"></p>
     <div v-bind:key="franchise.id" v-for="franchise in filterBy(franchises, teamFilter, 'team_name')">
