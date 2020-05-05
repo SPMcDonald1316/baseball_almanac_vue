@@ -1,7 +1,9 @@
 <template>
   <div class="players-index">
     <h1>{{ message }}</h1>
-    <p>Search players here:<input type="text" v-model="playerFilter"></p>
+    <p>Filter players on page:<input type="text" v-model="playerFilter"></p>
+    <p>Search players last name by letter:<input type="text" v-model="search"></p>
+    <button v-on:click="findPlayers(search)">Search</button> 
     <div v-bind:key="player.id" v-for="player in filterBy(players, playerFilter, 'name')">
       <h2>{{ player.name }}</h2>
       <h4>{{ player.debut }}</h4>
@@ -22,15 +24,23 @@ export default {
     return {
       message: "Players",
       players: [],
-      playerFilter: ""
+      playerFilter: "",
+      params: 'A'
     };
   },
   created: function() {
-    axios.get('/api/players?search=A').then(response => {
+    axios.get(`/api/players?search=A`).then(response => {
       console.log(response.data);
       this.players = response.data;
     });
   },
-  methods: {}
+  methods: {
+    findPlayers: function(search) {
+      axios.get(`/api/players?search=${search.toUpperCase()}`).then(response => {
+        console.log(response.data);
+        this.players = response.data;
+      });
+    }
+  }
 };
 </script>
