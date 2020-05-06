@@ -1,5 +1,5 @@
 <template>
-  <div class="franchises-show">
+  <div class="franchises-stats">
     <h1>{{ message }}</h1>
     <div>
       <h2>{{ franchise.team_name }}</h2>
@@ -14,15 +14,15 @@
           <th>League</th>
           <th>World Series</th>
         </thead>
-          <tr v-bind:key="stat.id" v-for="stat in franchise.stats">
-            <td>{{stat.year_id}}</td> <!-- create link to hitting/pitching/fielding stats for given year? -->
-            <td>{{stat.w}}</td>
-            <td>{{stat.l}}</td>
-            <!-- <td>{{stat.win_pct}}</td> -->
-            <td>{{stat.wc_win}}</td>
-            <td>{{stat.div_win}}</td>
-            <td>{{stat.lg_win}}</td>
-            <td>{{stat.ws_win}}</td>
+          <tr>
+            <td>{{yearStats.year_id}}</td> <!-- create link to hitting/pitching/fielding stats for given year? -->
+            <td>{{yearStats.w}}</td>
+            <td>{{yearStats.l}}</td>
+            <!-- <td>{{yearStats.win_pct}}</td> -->
+            <td>{{yearStats.wc_win}}</td>
+            <td>{{yearStats.div_win}}</td>
+            <td>{{yearStats.lg_win}}</td>
+            <td>{{yearStats.ws_win}}</td>
             <!-- decide what else to display on this page as opposed to stats pages
             maybe winning pct, division/league/world series titles -->
           </tr>
@@ -41,6 +41,7 @@ export default {
     return {
       message: "Franchise Stats",
       franchise: {},
+      yearStats: {}
     };
   },
   created: function() {

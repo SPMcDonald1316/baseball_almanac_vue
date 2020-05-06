@@ -3,6 +3,7 @@ import VueRouter from 'vue-router';
 import Home from '../views/Home.vue';
 import FranchisesIndex from '../views/FranchisesIndex.vue';
 import FranchisesShow from '../views/FranchisesShow.vue';
+import FranchisesStats from '../views/FranchisesStats.vue';
 import PlayersIndex from '../views/PlayersIndex.vue';
 
 Vue.use(VueRouter);
@@ -30,6 +31,11 @@ const routes = [
     path: '/franchises/:id',
     name: 'franchises-show',
     component: FranchisesShow
+  },
+  {
+    path: '/frachises/stats/:id',
+    name: 'franchises-stats',
+    component: FranchisesStats
   },
   {
     path: '/players',
