@@ -19,7 +19,7 @@ export default {
   mixins: [Vue2Filters.mixin],
   data: function() {
     return {
-      message: "Franchise's",
+      message: "Franchises",
       franchises: [],
       teamFilter: ""
     };

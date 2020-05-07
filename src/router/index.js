@@ -5,6 +5,7 @@ import FranchisesIndex from '../views/FranchisesIndex.vue';
 import FranchisesShow from '../views/FranchisesShow.vue';
 import FranchisesStats from '../views/FranchisesStats.vue';
 import PlayersIndex from '../views/PlayersIndex.vue';
+import PlayersShow from '../views/PlayersShow.vue';
 
 Vue.use(VueRouter);
 
@@ -41,6 +42,11 @@ const routes = [
     path: '/players',
     name: 'players-index',
     component: PlayersIndex
+  },
+  {
+    path: '/players/:id',
+    name: 'players-show',
+    component: PlayersShow
   }
 ];
 

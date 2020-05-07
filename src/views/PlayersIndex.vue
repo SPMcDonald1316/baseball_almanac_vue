@@ -5,7 +5,7 @@
     <p>Search players last name by letter:<input type="text" v-model="search"></p>
     <button v-on:click="findPlayers(search)">Search</button> 
     <div v-bind:key="player.id" v-for="player in filterBy(players, playerFilter, 'name')">
-      <h2>{{ player.name }}</h2>
+      <h2><a v-bind:href="`/players/${player.id}`">{{ player.name }}</a></h2>
       <h4>{{ player.debut }}</h4>
       <h4>{{ player.final_game }}</h4>
     </div>
