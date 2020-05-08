@@ -2,7 +2,7 @@
   <div class="franchises-show">
     <h1>{{ message }}</h1>
     <div>
-      <h2>{{ franchise.team_name }}</h2>
+      <h2>{{ franchise.franch_name }}</h2>
       <table>
         <thead>
           <th>Year</th>
@@ -44,7 +44,7 @@ export default {
     };
   },
   created: function() {
-    axios.get(`/api/franchises/${this.$route.params.id}`).then(response => {
+    axios.get(`/api/franchises/${this.$route.params.franch_id}`).then(response => {
       console.log(response.data);
       this.franchise = response.data;
       this.yearStats = this.franchise.stats.filter(year => {

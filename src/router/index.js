@@ -29,7 +29,7 @@ const routes = [
     component: FranchisesIndex
   },
   {
-    path: '/franchises/:id',
+    path: '/franchises/:franch_id',
     name: 'franchises-show',
     component: FranchisesShow
   },
