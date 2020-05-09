@@ -4,6 +4,7 @@ import Home from '../views/Home.vue';
 import FranchisesIndex from '../views/FranchisesIndex.vue';
 import FranchisesShow from '../views/FranchisesShow.vue';
 import FranchisesStats from '../views/FranchisesStats.vue';
+import GameBoxScore from '../views/GameBoxScore.vue';
 import PlayersIndex from '../views/PlayersIndex.vue';
 import PlayersShow from '../views/PlayersShow.vue';
 
@@ -29,14 +30,19 @@ const routes = [
     component: FranchisesIndex
   },
   {
+    path: '/frachises/:franch_id/:year_id',
+    name: 'franchises-stats',
+    component: FranchisesStats
+  },
+  {
     path: '/franchises/:franch_id',
     name: 'franchises-show',
     component: FranchisesShow
   },
   {
-    path: '/frachises/:franch_id/:year_id',
-    name: 'franchises-stats',
-    component: FranchisesStats
+    path: '/games/:game_id',
+    name: 'game-boxscore',
+    component: GameBoxScore
   },
   {
     path: '/players',
