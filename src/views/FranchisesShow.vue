@@ -15,7 +15,7 @@
           <th>World Series</th>
         </thead>
           <tr v-bind:key="stat.id" v-for="stat in franchise.stats">
-            <td>{{stat.year_id}}</td> <!-- create link to hitting/pitching/fielding stats for given year? -->
+            <td><a v-bind:href="`/franchises/${franchise.franch_id}/${stat.year_id}`">{{stat.year_id}}</a></td> <!-- create link to hitting/pitching/fielding stats for given year? -->
             <td>{{stat.w}}</td>
             <td>{{stat.l}}</td>
             <!-- <td>{{stat.win_pct}}</td> -->
@@ -47,10 +47,6 @@ export default {
     axios.get(`/api/franchises/${this.$route.params.franch_id}`).then(response => {
       console.log(response.data);
       this.franchise = response.data;
-      this.yearStats = this.franchise.stats.filter(year => {
-        return year.year_id === 1876;
-      });
-      console.log(this.yearStats);
     });
   },
   methods: {}

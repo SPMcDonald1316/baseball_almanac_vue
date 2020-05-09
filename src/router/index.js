@@ -34,7 +34,7 @@ const routes = [
     component: FranchisesShow
   },
   {
-    path: '/frachises/stats/:id',
+    path: '/frachises/:franch_id/:year_id',
     name: 'franchises-stats',
     component: FranchisesStats
   },

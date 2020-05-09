@@ -2,29 +2,40 @@
   <div class="franchises-stats">
     <h1>{{ message }}</h1>
     <div>
-      <h2>{{ franchise.team_name }}</h2>
+      <h2>{{ franchise.franch_name }}</h2>
       <table>
+        <h2>Hitting Stats</h2>
         <thead>
-          <th>Year</th>
-          <th>Wins</th>
-          <th>Losses</th>
-          <!-- <th>Winning Pct</th> -->
-          <th>Wild Card</th>
-          <th>Division</th>
-          <th>League</th>
-          <th>World Series</th>
+          <th>Games</th>
+          <th>Home Games</th>
+          <th>At Bats</th>
+          <th>Runs</th>
+          <th>Hits</th>
+          <th>Doubles</th>
+          <th>Triples</th>
+          <th>Home Runs</th>
+          <th>Walks</th>
+          <th>Strikeouts</th>
+          <th>Steals</th>
+          <th>Caught Stealing</th>
+          <th>Hit By Pitch</th>
+          <th>Sac Flys</th>
         </thead>
           <tr>
-            <td>{{yearStats.year_id}}</td> <!-- create link to hitting/pitching/fielding stats for given year? -->
-            <td>{{yearStats.w}}</td>
-            <td>{{yearStats.l}}</td>
-            <!-- <td>{{yearStats.win_pct}}</td> -->
-            <td>{{yearStats.wc_win}}</td>
-            <td>{{yearStats.div_win}}</td>
-            <td>{{yearStats.lg_win}}</td>
-            <td>{{yearStats.ws_win}}</td>
-            <!-- decide what else to display on this page as opposed to stats pages
-            maybe winning pct, division/league/world series titles -->
+            <td>{{yearStats.g}}</td>
+            <td>{{yearStats.g_home}}</td>
+            <td>{{yearStats.ab}}</td>
+            <td>{{yearStats.r}}</td>
+            <td>{{yearStats.h}}</td>
+            <td>{{yearStats.doubles}}</td>
+            <td>{{yearStats.triples}}</td>
+            <td>{{yearStats.hr}}</td>
+            <td>{{yearStats.bb}}</td>
+            <td>{{yearStats.so}}</td>
+            <td>{{yearStats.sb}}</td>
+            <td>{{yearStats.cs}}</td>
+            <td>{{yearStats.hbp}}</td>
+            <td>{{yearStats.sf}}</td>
           </tr>
       </table>
     </div>
@@ -45,11 +56,11 @@ export default {
     };
   },
   created: function() {
-    axios.get(`/api/franchises/${this.$route.params.id}`).then(response => {
+    axios.get(`/api/franchises/${this.$route.params.franch_id}`).then(response => {
       console.log(response.data);
       this.franchise = response.data;
       this.yearStats = this.franchise.stats.filter(year => {
-        return year.year_id === 1876;
+        return year.year_id === `${this.$route.params.year_id}`;
       });
       console.log(this.yearStats);
     });
