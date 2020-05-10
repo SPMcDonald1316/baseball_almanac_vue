@@ -30,14 +30,14 @@ const routes = [
     component: FranchisesIndex
   },
   {
-    path: '/frachises/:franch_id/:year_id',
-    name: 'franchises-stats',
-    component: FranchisesStats
-  },
-  {
     path: '/franchises/:franch_id',
     name: 'franchises-show',
     component: FranchisesShow
+  },
+  {
+    path: '/franchises/:franch_id/:year_id',
+    name: 'franchises-stats',
+    component: FranchisesStats
   },
   {
     path: '/games/:game_id',
