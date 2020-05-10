@@ -1,8 +1,8 @@
 <template>
   <div class="franchises-show">
     <h1>{{ message }}</h1>
-    <div>
-      <h2>{{ franchise.franch_name }}</h2>
+    <div v-bind:key="event.id" v-for="event in game">
+      <p>{{event}}</p>
     </div>
   </div>
 </template>
