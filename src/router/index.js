@@ -45,12 +45,12 @@ const routes = [
     component: GameBoxScore
   },
   {
-    path: '/players',
+    path: '/players/:search',
     name: 'players-index',
     component: PlayersIndex
   },
   {
-    path: '/players/:id',
+    path: '/player/:id',
     name: 'players-show',
     component: PlayersShow
   }

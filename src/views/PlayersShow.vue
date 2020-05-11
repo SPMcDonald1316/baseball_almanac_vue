@@ -288,7 +288,7 @@ export default {
     };
   },
   created: function() {
-    axios.get(`/api/players/${this.$route.params.id}`).then(response => {
+    axios.get(`/api/player/${this.$route.params.id}`).then(response => {
       // console.log(response.data);
       this.player = response.data;
       // console.log(this.player);

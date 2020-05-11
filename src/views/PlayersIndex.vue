@@ -5,7 +5,7 @@
     <p>Search players last name by letter:<input type="text" v-model="search"></p>
     <button v-on:click="findPlayers(search)">Search</button> 
     <div v-bind:key="player.id" v-for="player in filterBy(players, playerFilter, 'name')">
-      <h2><a v-bind:href="`/players/${player.id}`">{{ player.name }}</a></h2>
+      <h2><router-link :to="{name: 'players-show', params: {id: player.id}}">{{ player.name }}</router-link></h2>
       <h4>{{ player.debut }}</h4>
       <h4>{{ player.final_game }}</h4>
     </div>
@@ -24,23 +24,15 @@ export default {
     return {
       message: "Players",
       players: [],
-      playerFilter: "",
-      params: 'A'
+      playerFilter: ""
     };
   },
   created: function() {
-    axios.get(`/api/players?search=A`).then(response => {
+    axios.get(`/api/players/${this.$route.params.search}`).then(response => {
       console.log(response.data);
       this.players = response.data;
     });
   },
-  methods: {
-    findPlayers: function(search) {
-      axios.get(`/api/players?search=${search.toUpperCase()}`).then(response => {
-        console.log(response.data);
-        this.players = response.data;
-      });
-    }
-  }
+  methods: {}
 };
 </script>
