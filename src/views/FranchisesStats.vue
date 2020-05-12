@@ -4,13 +4,13 @@
       <!-- Inner -->
       <div class="inner">
         <header>
-          <h1><a href="index.html" id="logo">Helios</a></h1>
+          <h1><a href="/" id="logo">Baseball Almanac</a></h1>
         </header>
       </div>
       <!-- Nav -->
       <nav id="nav">
         <ul>
-          <li><a href="index.html">Home</a></li>
+          <li><a href="/">Home</a></li>
           <li>
             <a href="#">Dropdown</a>
             <ul>
@@ -117,162 +117,93 @@
           <div class="col-8 col-12-mobile imp-mobile" id="content">
             <article id="main">
               <header>
-                <h2><a href="#">Left Sidebar</a></h2>
-                <p>
-                  Morbi convallis lectus malesuada sed fermentum dolore amet
-                </p>
+                <h2>{{franchise.stats.name}}</h2>
+                <p>{{franchise.stats.year_id}}</p>
               </header>
-              <a href="#" class="image featured"><img src="images/pic06.jpg" alt="" /></a>
-              <p>
-                Commodo id natoque malesuada sollicitudin elit suscipit. Curae suspendisse mauris posuere accumsan massa
-                posuere lacus convallis tellus interdum. Amet nullam fringilla nibh nulla convallis ut venenatis purus
-                lobortis. Auctor etiam porttitor phasellus tempus cubilia ultrices tempor sagittis. Nisl fermentum
-                consequat integer interdum integer purus sapien. Nibh eleifend nulla nascetur pharetra commodo mi augue
-                interdum tellus. Ornare cursus augue feugiat sodales velit lorem. Semper elementum ullamcorper lacinia
-                natoque aenean scelerisque vel lacinia mollis quam sodales congue.
-              </p>
               <section>
                 <header>
-                  <h3>Ultrices tempor sagittis nisl</h3>
+                  <h3>Hitting Stats</h3>
                 </header>
-                <p>
-                  Nascetur volutpat nibh ullamcorper vivamus at purus. Cursus ultrices porttitor sollicitudin imperdiet
-                  at pretium tellus in euismod a integer sodales neque. Nibh quis dui quis mattis eget imperdiet venenatis
-                  feugiat. Neque primis ligula cum erat aenean tristique luctus risus ipsum praesent iaculis. Fermentum elit
-                  fringilla consequat dis arcu. Pellentesque mus tempor vitae pretium sodales porttitor lacus. Phasellus
-                  egestas odio nisl duis sociis purus faucibus morbi. Eget massa mus etiam sociis pharetra magna.
-                </p>
-                <p>
-                  Eleifend auctor turpis magnis sed porta nisl pretium. Aenean suspendisse nulla eget sed etiam parturient
-                  orci cursus nibh. Quisque eu nec neque felis laoreet diam morbi egestas. Dignissim cras rutrum consectetur
-                  ut penatibus fermentum nibh erat malesuada varius.
-                </p>
+                <table class="default">
+                  <thead>
+                    <th>Games</th>
+                    <th>Home Games</th>
+                    <th>At Bats</th>
+                    <th>Runs</th>
+                    <th>Hits</th>
+                    <th>Doubles</th>
+                    <th>Triples</th>
+                    <th>Home Runs</th>
+                    <th>Walks</th>
+                    <th>Strikeouts</th>
+                    <th>Steals</th>
+                    <th>Caught Stealing</th>
+                    <th>Hit By Pitch</th>
+                    <th>Sac Flys</th>
+                  </thead>
+                  <tr>
+                    <td>{{franchise.stats.g}}</td>
+                    <td>{{franchise.stats.g_home}}</td>
+                    <td>{{franchise.stats.ab}}</td>
+                    <td>{{franchise.stats.r}}</td>
+                    <td>{{franchise.stats.h}}</td>
+                    <td>{{franchise.stats.doubles}}</td>
+                    <td>{{franchise.stats.triples}}</td>
+                    <td>{{franchise.stats.hr}}</td>
+                    <td>{{franchise.stats.bb}}</td>
+                    <td>{{franchise.stats.so}}</td>
+                    <td>{{franchise.stats.sb}}</td>
+                    <td>{{franchise.stats.cs}}</td>
+                    <td>{{franchise.stats.hbp}}</td>
+                    <td>{{franchise.stats.sf}}</td>
+                  </tr>
+                </table>
               </section>
               <section>
                 <header>
-                  <h3>Augue euismod feugiat tempus</h3>
+                  <h3>Pitching Stats</h3>
                 </header>
-                <p>
-                  Pretium tellus in euismod a integer sodales neque. Nibh quis dui quis mattis eget imperdiet venenatis
-                  feugiat. Neque primis ligula cum erat aenean tristique luctus risus ipsum praesent iaculis. Fermentum elit
-                  ut nunc urna volutpat donec cubilia commodo risus morbi. Lobortis vestibulum velit malesuada ante
-                  egestas odio nisl duis sociis purus faucibus morbi. Eget massa mus etiam sociis pharetra magna.
-                </p>
+                <table class="default">
+                  <thead>
+                    <th>Games</th>
+                    <th>Home Games</th>
+                    <th>Hits Allowed</th>
+                    <th>Walks Allowed</th>
+                    <th>Runs Allowed</th>
+                    <th>Home Runs Allowed</th>
+                    <th>Strikeouts</th>
+                    <th>Earned Runs</th>
+                    <th>ERA</th>
+                    <th>Complete Games</th>
+                    <th>Shutouts</th>
+                    <th>Saves</th>
+                    <th>Errors</th>
+                    <th>Double Plays</th>
+                    <th>Fielding Pct</th>
+                  </thead>
+                  <tr>
+                    <td>{{franchise.stats.g}}</td>
+                    <td>{{franchise.stats.g_home}}</td>
+                    <td>{{franchise.stats.ha}}</td>
+                    <td>{{franchise.stats.bba}}</td>
+                    <td>{{franchise.stats.ra}}</td>
+                    <td>{{franchise.stats.hra}}</td>
+                    <td>{{franchise.stats.soa}}</td>
+                    <td>{{franchise.stats.er}}</td>
+                    <td>{{franchise.stats.era}}</td>
+                    <td>{{franchise.stats.cg}}</td>
+                    <td>{{franchise.stats.sho}}</td>
+                    <td>{{franchise.stats.sv}}</td>
+                    <td>{{franchise.stats.e}}</td>
+                    <td>{{franchise.stats.dp}}</td>
+                    <td>{{franchise.stats.fp}}</td>
+                  </tr>
+                </table>
               </section>
             </article>
           </div>
         </div>
-        <hr />
-        <div class="row">
-          <article class="col-4 col-12-mobile special">
-            <a href="#" class="image featured"><img src="images/pic07.jpg" alt="" /></a>
-            <header>
-              <h3><a href="#">Gravida aliquam penatibus</a></h3>
-            </header>
-            <p>
-              Amet nullam fringilla nibh nulla convallis tique ante proin sociis accumsan lobortis. Auctor etiam
-              porttitor phasellus tempus cubilia ultrices tempor sagittis. Nisl fermentum consequat integer interdum.
-            </p>
-          </article>
-          <article class="col-4 col-12-mobile special">
-            <a href="#" class="image featured"><img src="images/pic08.jpg" alt="" /></a>
-            <header>
-              <h3><a href="#">Sed quis rhoncus placerat</a></h3>
-            </header>
-            <p>
-              Amet nullam fringilla nibh nulla convallis tique ante proin sociis accumsan lobortis. Auctor etiam
-              porttitor phasellus tempus cubilia ultrices tempor sagittis. Nisl fermentum consequat integer interdum.
-            </p>
-          </article>
-          <article class="col-4 col-12-mobile special">
-            <a href="#" class="image featured"><img src="images/pic09.jpg" alt="" /></a>
-            <header>
-              <h3><a href="#">Magna laoreet et aliquam</a></h3>
-            </header>
-            <p>
-              Amet nullam fringilla nibh nulla convallis tique ante proin sociis accumsan lobortis. Auctor etiam
-              porttitor phasellus tempus cubilia ultrices tempor sagittis. Nisl fermentum consequat integer interdum.
-            </p>
-          </article>
-        </div>
       </div>
-
-    </div>
-    <h1>{{ message }}</h1>
-    <div>
-      <h2>{{ franchise.franch_name }}</h2>
-      <table>
-        <!-- <h2>Hitting Stats</h2> -->
-        <thead>
-          <th>Games</th>
-          <th>Home Games</th>
-          <th>At Bats</th>
-          <th>Runs</th>
-          <th>Hits</th>
-          <th>Doubles</th>
-          <th>Triples</th>
-          <th>Home Runs</th>
-          <th>Walks</th>
-          <th>Strikeouts</th>
-          <th>Steals</th>
-          <th>Caught Stealing</th>
-          <th>Hit By Pitch</th>
-          <th>Sac Flys</th>
-        </thead>
-          <tr>
-            <td>{{franchise.stats.g}}</td>
-            <td>{{franchise.stats.g_home}}</td>
-            <td>{{franchise.stats.ab}}</td>
-            <td>{{franchise.stats.r}}</td>
-            <td>{{franchise.stats.h}}</td>
-            <td>{{franchise.stats.doubles}}</td>
-            <td>{{franchise.stats.triples}}</td>
-            <td>{{franchise.stats.hr}}</td>
-            <td>{{franchise.stats.bb}}</td>
-            <td>{{franchise.stats.so}}</td>
-            <td>{{franchise.stats.sb}}</td>
-            <td>{{franchise.stats.cs}}</td>
-            <td>{{franchise.stats.hbp}}</td>
-            <td>{{franchise.stats.sf}}</td>
-          </tr>
-      </table>
-      <table>
-        <!-- <h2>Hitting Stats</h2> -->
-        <thead>
-          <th>Games</th>
-          <th>Home Games</th>
-          <th>Hits Allowed</th>
-          <th>Walks Allowed</th>
-          <th>Runs Allowed</th>
-          <th>Home Runs Allowed</th>
-          <th>Strikeouts</th>
-          <th>Earned Runs</th>
-          <th>ERA</th>
-          <th>Complete Games</th>
-          <th>Shutouts</th>
-          <th>Saves</th>
-          <th>Errors</th>
-          <th>Double Plays</th>
-          <th>Fielding Pct</th>
-        </thead>
-          <tr>
-            <td>{{franchise.stats.g}}</td>
-            <td>{{franchise.stats.g_home}}</td>
-            <td>{{franchise.stats.ha}}</td>
-            <td>{{franchise.stats.bba}}</td>
-            <td>{{franchise.stats.ra}}</td>
-            <td>{{franchise.stats.hra}}</td>
-            <td>{{franchise.stats.soa}}</td>
-            <td>{{franchise.stats.er}}</td>
-            <td>{{franchise.stats.era}}</td>
-            <td>{{franchise.stats.cg}}</td>
-            <td>{{franchise.stats.sho}}</td>
-            <td>{{franchise.stats.sv}}</td>
-            <td>{{franchise.stats.e}}</td>
-            <td>{{franchise.stats.dp}}</td>
-            <td>{{franchise.stats.fp}}</td>
-          </tr>
-      </table>
     </div>
   </div>
 </template>

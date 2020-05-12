@@ -4,13 +4,13 @@
       <!-- Inner -->
       <div class="inner">
         <header>
-          <h1><a href="index.html" id="logo">Helios</a></h1>
+          <h1><a href="/" id="logo">Baseball Almanac</a></h1>
         </header>
       </div>
       <!-- Nav -->
       <nav id="nav">
         <ul>
-          <li><a href="index.html">Home</a></li>
+          <li><a href="/">Home</a></li>
           <li>
             <a href="#">Dropdown</a>
             <ul>
@@ -117,7 +117,7 @@
           <div class="col-8 col-12-mobile imp-mobile" id="content">
             <article id="main">
               <header>
-                <h2><a href="#">Left Sidebar</a></h2>
+                <h2><a href="#">{{ franchise.franch_name }}</a></h2>
                 <p>
                   Morbi convallis lectus malesuada sed fermentum dolore amet
                 </p>
@@ -132,21 +132,30 @@
                 natoque aenean scelerisque vel lacinia mollis quam sodales congue.
               </p>
               <section>
-                <header>
-                  <h3>Ultrices tempor sagittis nisl</h3>
-                </header>
-                <p>
-                  Nascetur volutpat nibh ullamcorper vivamus at purus. Cursus ultrices porttitor sollicitudin imperdiet
-                  at pretium tellus in euismod a integer sodales neque. Nibh quis dui quis mattis eget imperdiet venenatis
-                  feugiat. Neque primis ligula cum erat aenean tristique luctus risus ipsum praesent iaculis. Fermentum elit
-                  fringilla consequat dis arcu. Pellentesque mus tempor vitae pretium sodales porttitor lacus. Phasellus
-                  egestas odio nisl duis sociis purus faucibus morbi. Eget massa mus etiam sociis pharetra magna.
-                </p>
-                <p>
-                  Eleifend auctor turpis magnis sed porta nisl pretium. Aenean suspendisse nulla eget sed etiam parturient
-                  orci cursus nibh. Quisque eu nec neque felis laoreet diam morbi egestas. Dignissim cras rutrum consectetur
-                  ut penatibus fermentum nibh erat malesuada varius.
-                </p>
+                <table class="default">
+                  <thead>
+                    <th>Year</th>
+                    <th>Wins</th>
+                    <th>Losses</th>
+                    <!-- <th>Winning Pct</th> -->
+                    <th>Wild Card</th>
+                    <th>Division</th>
+                    <th>League</th>
+                    <th>World Series</th>
+                  </thead>
+                  <tr v-bind:key="stat.id" v-for="stat in franchise.stats">
+                    <td><a v-bind:href="`/franchises/${franchise.franch_id}/${stat.year_id}`">{{stat.year_id}}</a></td> <!-- create link to hitting/pitching/fielding stats for given year? -->
+                    <td>{{stat.w}}</td>
+                    <td>{{stat.l}}</td>
+                    <!-- <td>{{stat.win_pct}}</td> -->
+                    <td>{{stat.wc_win}}</td>
+                    <td>{{stat.div_win}}</td>
+                    <td>{{stat.lg_win}}</td>
+                    <td>{{stat.ws_win}}</td>
+                    <!-- decide what else to display on this page as opposed to stats pages
+                    maybe winning pct, division/league/world series titles -->
+                  </tr>
+                </table>
               </section>
               <section>
                 <header>
@@ -197,34 +206,6 @@
         </div>
       </div>
 
-    </div>
-    <h1>{{ message }}</h1>
-    <div>
-      <h2>{{ franchise.franch_name }}</h2>
-      <table>
-        <thead>
-          <th>Year</th>
-          <th>Wins</th>
-          <th>Losses</th>
-          <!-- <th>Winning Pct</th> -->
-          <th>Wild Card</th>
-          <th>Division</th>
-          <th>League</th>
-          <th>World Series</th>
-        </thead>
-          <tr v-bind:key="stat.id" v-for="stat in franchise.stats">
-            <td><a v-bind:href="`/franchises/${franchise.franch_id}/${stat.year_id}`">{{stat.year_id}}</a></td> <!-- create link to hitting/pitching/fielding stats for given year? -->
-            <td>{{stat.w}}</td>
-            <td>{{stat.l}}</td>
-            <!-- <td>{{stat.win_pct}}</td> -->
-            <td>{{stat.wc_win}}</td>
-            <td>{{stat.div_win}}</td>
-            <td>{{stat.lg_win}}</td>
-            <td>{{stat.ws_win}}</td>
-            <!-- decide what else to display on this page as opposed to stats pages
-            maybe winning pct, division/league/world series titles -->
-          </tr>
-      </table>
     </div>
   </div>
 </template>
