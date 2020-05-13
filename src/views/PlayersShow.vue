@@ -43,74 +43,70 @@
             <hr class="first" />
             <section>
               <header>
-                <h3><a href="#">About {{ player.name }}</a></h3>
+                <h3><a href="#">Player Info</a></h3>
               </header>
               <p>Height: {{ player.height }}</p>
               <p>Weight: {{ player.weight }}</p>
               <p>Debut: {{ player.debut }}</p>
               <p>Final Game: {{ player.final_game }}</p>
-              <footer>
-                <a href="#" class="button">Learn More</a>
-              </footer>
+              <p v-if="player.halloffame">Year Inducted Into Hall Of Fame: {{player.halloffame.year_id}}</p>
             </section>
             <hr />
             <section>
               <header>
-                <h3><a href="#">Sed lorem etiam consequat</a></h3>
+                <h3><a href="#">More Info</a></h3>
               </header>
               <p>
-                Tempus cubilia ultrices tempor sagittis. Nisl fermentum consequat integer interdum.
+                Awards, Allstar Apperances, Salary Info
               </p>
               <div class="row gtr-50">
-                <div class="col-4">
-                  <a href="#" class="image fit"><img src="images/pic10.jpg" alt="" /></a>
+                <div class="col-8" v-if="player.awards && player.awards.length > 0">
+                  <h4>Awards</h4>
+                  <table class="default">
+                    <thead>
+                      <th>Year</th>
+                      <th>League</th>
+                      <th>Award</th>
+                    </thead>
+                    <tr v-bind:key="award.id" v-for="award in player.awards">
+                      <td>{{award.year_id}}</td>
+                      <td>{{award.lg_id}}</td>
+                      <td>{{award.award_id}}</td>
+                    </tr>
+                  </table>
                 </div>
-                <div class="col-8">
-                  <h4>Nibh sed cubilia</h4>
-                  <p>
-                    Amet nullam fringilla nibh nulla convallis tique ante proin.
-                  </p>
+                <div class="col-8" v-if="player.awards && player.awards.length > 0">
+                  <h4>Allstar Appearances</h4>
+                  <table class="default">
+                    <thead>
+                      <th>Year</th>
+                      <th>League</th>
+                      <th>Team</th>
+                    </thead>
+                    <tr v-bind:key="appearance.id" v-for="appearance in player.allstar">
+                      <td>{{appearance.year_id}}</td>
+                      <td>{{appearance.lg_id}}</td>
+                      <td>{{appearance.team_id}}</td>
+                    </tr>
+                  </table>
                 </div>
-                <div class="col-4">
-                  <a href="#" class="image fit"><img src="images/pic11.jpg" alt="" /></a>
+                <div class="col-8" v-if="player.salaries && player.salaries.length > 0">
+                  <h4>Salary</h4>
+                  <table class="default">
+                    <thead>
+                      <th>Year</th>
+                      <th>Team</th>
+                      <th>Salary</th>
+                    </thead>
+                    <tr v-bind:key="salary.id" v-for="salary in player.salaries">
+                      <td>{{salary.year_id}}</td>
+                      <td>{{salary.team_id}}</td>
+                      <td>{{salary.salary}}</td>
+                    </tr>
+                  </table>
                 </div>
-                <div class="col-8">
-                  <h4>Proin sed adipiscing</h4>
-                  <p>
-                    Amet nullam fringilla nibh nulla convallis tique ante proin.
-                  </p>
-                </div>
-                <div class="col-4">
-                  <a href="#" class="image fit"><img src="images/pic12.jpg" alt="" /></a>
-                </div>
-                <div class="col-8">
-                  <h4>Lorem feugiat magna</h4>
-                  <p>
-                    Amet nullam fringilla nibh nulla convallis tique ante proin.
-                  </p>
-                </div>
-                <div class="col-4">
-                  <a href="#" class="image fit"><img src="images/pic13.jpg" alt="" /></a>
-                </div>
-                <div class="col-8">
-                  <h4>Sed tempus fringilla</h4>
-                  <p>
-                    Amet nullam fringilla nibh nulla convallis tique ante proin.
-                  </p>
-                </div>
-                <div class="col-4">
-                  <a href="#" class="image fit"><img src="images/pic14.jpg" alt="" /></a>
-                </div>
-                <div class="col-8">
-                  <h4>Malesuada fermentum</h4>
-                  <p>
-                    Amet nullam fringilla nibh nulla convallis tique ante proin.
-                  </p>
-                </div>
+                
               </div>
-              <footer>
-                <a href="#" class="button">Magna Adipiscing</a>
-              </footer>
             </section>
           </div>
           <div class="col-8 col-12-mobile imp-mobile" id="content">
@@ -437,7 +433,7 @@ export default {
   },
   created: function() {
     axios.get(`/api/player/${this.$route.params.id}`).then(response => {
-      // console.log(response.data);
+      console.log(response.data);
       this.player = response.data;
       // console.log(this.player);
     });
