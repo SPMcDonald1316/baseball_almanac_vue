@@ -182,6 +182,21 @@
                   </tr>
                 </table>
               </section>
+              <section v-if="games && games.length > 0">
+                <header>
+                  <h3>Game Info <span>(Games sorted by home team)</span></h3>
+                </header>
+                <table class="default">
+                  <thead>
+                    <th>Date</th>
+                    <th>Game</th>
+                  </thead>
+                  <tr v-bind:key="game.id" v-for="game in games">
+                    <td><a v-bind:href="`/games/${game.game_id}`">{{game.game_date}}</a></td>
+                    <td>{{game.home_team}} vs. {{game.away_team}}</td>
+                  </tr>
+                </table>
+              </section>
             </article>
           </div>
         </div>
@@ -207,11 +222,10 @@ export default {
     axios.get(`/api/franchises/${this.$route.params.franch_id}/${this.$route.params.year_id}`).then(response => {
       console.log(response.data);
       this.franchise = response.data;
-    });
-  },
-  mounted: function() {
-    axios.get(`/api/games?team=${this.franchise.stats.team_id_retro}&&year=${this.franchise.stats.year_id}`).then(response => {
-      this.games = response.data;
+      axios.get(`/api/games?team=${this.franchise.stats.team_id_retro}&&year=${this.franchise.stats.year_id}`).then(response => {
+        this.games = response.data;
+        console.log(response.data);
+      });
     });
   },
   methods: {}
