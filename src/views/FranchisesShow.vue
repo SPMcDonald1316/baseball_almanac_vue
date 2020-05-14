@@ -11,27 +11,9 @@
       <nav id="nav">
         <ul>
           <li><a href="/">Home</a></li>
-          <li>
-            <a href="#">Dropdown</a>
-            <ul>
-              <li><a href="#">Lorem ipsum dolor</a></li>
-              <li><a href="#">Magna phasellus</a></li>
-              <li><a href="#">Etiam dolore nisl</a></li>
-              <li>
-                <a href="#">And a submenu &hellip;</a>
-                <ul>
-                  <li><a href="#">Lorem ipsum dolor</a></li>
-                  <li><a href="#">Phasellus consequat</a></li>
-                  <li><a href="#">Magna phasellus</a></li>
-                  <li><a href="#">Etiam dolore nisl</a></li>
-                </ul>
-              </li>
-              <li><a href="#">Veroeros feugiat</a></li>
-            </ul>
-          </li>
-          <li><a href="left-sidebar.html">Left Sidebar</a></li>
-          <li><a href="right-sidebar.html">Right Sidebar</a></li>
-          <li><a href="no-sidebar.html">No Sidebar</a></li>
+          <li><a href="/franchises">Franchises</a></li>
+          <li><a href="/players/A">Players</a></li>
+          <li><a href="/about">About Me</a></li>
         </ul>
       </nav>
 		</div>
@@ -135,6 +117,7 @@
                 <table class="default">
                   <thead>
                     <th>Year</th>
+                    <th>Team</th>
                     <th>Wins</th>
                     <th>Losses</th>
                     <!-- <th>Winning Pct</th> -->
@@ -144,7 +127,8 @@
                     <th>World Series</th>
                   </thead>
                   <tr v-bind:key="stat.id" v-for="stat in franchise.stats">
-                    <td><a v-bind:href="`/franchises/${franchise.franch_id}/${stat.year_id}`">{{stat.year_id}}</a></td> <!-- create link to hitting/pitching/fielding stats for given year? -->
+                    <td><a v-bind:href="`/franchises/${franchise.franch_id}/${stat.year_id}`">{{stat.year_id}}</a></td>
+                    <td>{{stat.name}}</td>
                     <td>{{stat.w}}</td>
                     <td>{{stat.l}}</td>
                     <!-- <td>{{stat.win_pct}}</td> -->
@@ -157,52 +141,8 @@
                   </tr>
                 </table>
               </section>
-              <section>
-                <header>
-                  <h3>Augue euismod feugiat tempus</h3>
-                </header>
-                <p>
-                  Pretium tellus in euismod a integer sodales neque. Nibh quis dui quis mattis eget imperdiet venenatis
-                  feugiat. Neque primis ligula cum erat aenean tristique luctus risus ipsum praesent iaculis. Fermentum elit
-                  ut nunc urna volutpat donec cubilia commodo risus morbi. Lobortis vestibulum velit malesuada ante
-                  egestas odio nisl duis sociis purus faucibus morbi. Eget massa mus etiam sociis pharetra magna.
-                </p>
-              </section>
             </article>
           </div>
-        </div>
-        <hr />
-        <div class="row">
-          <article class="col-4 col-12-mobile special">
-            <a href="#" class="image featured"><img src="images/pic07.jpg" alt="" /></a>
-            <header>
-              <h3><a href="#">Gravida aliquam penatibus</a></h3>
-            </header>
-            <p>
-              Amet nullam fringilla nibh nulla convallis tique ante proin sociis accumsan lobortis. Auctor etiam
-              porttitor phasellus tempus cubilia ultrices tempor sagittis. Nisl fermentum consequat integer interdum.
-            </p>
-          </article>
-          <article class="col-4 col-12-mobile special">
-            <a href="#" class="image featured"><img src="images/pic08.jpg" alt="" /></a>
-            <header>
-              <h3><a href="#">Sed quis rhoncus placerat</a></h3>
-            </header>
-            <p>
-              Amet nullam fringilla nibh nulla convallis tique ante proin sociis accumsan lobortis. Auctor etiam
-              porttitor phasellus tempus cubilia ultrices tempor sagittis. Nisl fermentum consequat integer interdum.
-            </p>
-          </article>
-          <article class="col-4 col-12-mobile special">
-            <a href="#" class="image featured"><img src="images/pic09.jpg" alt="" /></a>
-            <header>
-              <h3><a href="#">Magna laoreet et aliquam</a></h3>
-            </header>
-            <p>
-              Amet nullam fringilla nibh nulla convallis tique ante proin sociis accumsan lobortis. Auctor etiam
-              porttitor phasellus tempus cubilia ultrices tempor sagittis. Nisl fermentum consequat integer interdum.
-            </p>
-          </article>
         </div>
       </div>
 
@@ -220,6 +160,7 @@ export default {
     return {
       message: "Franchise Stats",
       franchise: {},
+      games: {},
     };
   },
   created: function() {
