@@ -21,88 +21,25 @@
 
       <div class="container">
         <div class="row gtr-200">
-          <div class="col-4 col-12-mobile" id="sidebar">
-            <hr class="first" />
-            <section>
-              <header>
-                <h3><a href="#">Accumsan sed penatibus</a></h3>
-              </header>
-              <p>
-                Dolor sed fringilla nibh nulla convallis tique ante proin sociis accumsan lobortis. Auctor etiam
-                porttitor phasellus tempus cubilia ultrices tempor sagittis  tellus ante diam nec penatibus dolor cras
-                magna tempus feugiat veroeros.
-              </p>
-              <footer>
-                <a href="#" class="button">Learn More</a>
-              </footer>
-            </section>
-            <hr />
-            <section>
-              <header>
-                <h3><a href="#">Sed lorem etiam consequat</a></h3>
-              </header>
-              <p>
-                Tempus cubilia ultrices tempor sagittis. Nisl fermentum consequat integer interdum.
-              </p>
-              <div class="row gtr-50">
-                <div class="col-4">
-                  <a href="#" class="image fit"><img src="images/pic10.jpg" alt="" /></a>
-                </div>
-                <div class="col-8">
-                  <h4>Nibh sed cubilia</h4>
-                  <p>
-                    Amet nullam fringilla nibh nulla convallis tique ante proin.
-                  </p>
-                </div>
-                <div class="col-4">
-                  <a href="#" class="image fit"><img src="images/pic11.jpg" alt="" /></a>
-                </div>
-                <div class="col-8">
-                  <h4>Proin sed adipiscing</h4>
-                  <p>
-                    Amet nullam fringilla nibh nulla convallis tique ante proin.
-                  </p>
-                </div>
-                <div class="col-4">
-                  <a href="#" class="image fit"><img src="images/pic12.jpg" alt="" /></a>
-                </div>
-                <div class="col-8">
-                  <h4>Lorem feugiat magna</h4>
-                  <p>
-                    Amet nullam fringilla nibh nulla convallis tique ante proin.
-                  </p>
-                </div>
-                <div class="col-4">
-                  <a href="#" class="image fit"><img src="images/pic13.jpg" alt="" /></a>
-                </div>
-                <div class="col-8">
-                  <h4>Sed tempus fringilla</h4>
-                  <p>
-                    Amet nullam fringilla nibh nulla convallis tique ante proin.
-                  </p>
-                </div>
-                <div class="col-4">
-                  <a href="#" class="image fit"><img src="images/pic14.jpg" alt="" /></a>
-                </div>
-                <div class="col-8">
-                  <h4>Malesuada fermentum</h4>
-                  <p>
-                    Amet nullam fringilla nibh nulla convallis tique ante proin.
-                  </p>
-                </div>
-              </div>
-              <footer>
-                <a href="#" class="button">Magna Adipiscing</a>
-              </footer>
-            </section>
-          </div>
           <div class="col-8 col-12-mobile imp-mobile" id="content">
             <article id="main">
               <header>
-                <!-- would like to pass this info down from franchisestats page -->
-                <h2>Game</h2>
-                <p>Date</p>
+                <h2>{{game[0].away_team}} @ {{game[0].home_team[0]}}</h2>
+                <p>{{ game[0].home_team[1]}}</p>
+                <p>{{game[0].game_date}}</p>
               </header>
+              <table class=default>
+                <thead>
+                  <th>Inning</th>
+                  <!-- <th v-bind:key="inning.id" v-for="inning in innings">{{inning}}</th> -->
+                </thead>
+                <tr>
+                  <th>Away</th>
+                </tr>
+                <tr>
+                  <th>Home</th>
+                </tr>
+              </table>
               <section>
                 <table class="default">
                   <thead>
@@ -131,6 +68,52 @@
               </section>
             </article>
           </div>
+          <div class="col-4 col-12-mobile" id="sidebar">
+            <hr class="first" />
+            <section>
+              <header>
+                <h3>
+                  
+                </h3>
+              </header>
+              <p>
+
+
+
+
+              </p>
+            </section>
+            <section>
+              <header>
+                <h3>
+
+                </h3>
+              </header>
+              <p>
+
+
+
+
+              </p>
+            </section>
+            <section>
+              <header>
+                <h3>{{game[0].away_team}} Lineup</h3>
+              </header>
+              <ul>
+                <li v-bind:key="player.id" v-for="player in awayLineup">{{player}}</li>
+              </ul>
+            </section>
+            <hr />
+            <section>
+              <header>
+                <h3>{{game[0].home_team[0]}} Lineup</h3>
+              </header>
+              <ul>
+                <li v-bind:key="player.id" v-for="player in homeLineup">{{player}}</li>
+              </ul>
+            </section>
+          </div>
         </div>
       </div>
 
@@ -148,12 +131,40 @@ export default {
     return {
       message: "Game Box Score",
       game: {},
+      homeLineup: [],
+      awayLineup: []
     };
   },
   created: function() {
     axios.get(`/api/games/${this.$route.params.game_id}`).then(response => {
       console.log(response.data);
       this.game = response.data;
+      for (let i = 0; i < this.game.length; i++) {
+        if (this.game[i].batting === this.game[i].away_team) {
+          if (this.awayLineup.length === 0) {
+            this.awayLineup.push(this.game[i].batter);
+          } else if (this.awayLineup.includes(this.game[i].batter)) {
+            i++;
+          } else if (this.awayLineup.length < 9) {
+            this.awayLineup.push(this.game[i].batter);
+          } else {
+            break;
+          }
+        }
+      }
+      for (let i = 0; i < this.game.length; i++) {
+        if (this.game[i].batting === this.game[i].home_team[0]) {
+          if (this.homeLineup.length === 0) {
+            this.homeLineup.push(this.game[i].batter);
+          } else if (this.homeLineup.includes(this.game[i].batter)) {
+            continue;
+          } else if (this.homeLineup.length < 9) {
+            this.homeLineup.push(this.game[i].batter);
+          } else {
+            break;
+          }
+        }
+      }
     });
   },
   methods: {}

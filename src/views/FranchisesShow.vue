@@ -21,7 +21,7 @@
 
       <div class="container">
         <div class="row gtr-200">
-          <div class="col-4 col-12-mobile" id="sidebar">
+          <!-- <div class="col-4 col-12-mobile" id="sidebar">
             <hr class="first" />
             <section>
               <header>
@@ -39,80 +39,31 @@
             <hr />
             <section>
               <header>
-                <h3><a href="#">Sed lorem etiam consequat</a></h3>
+                <h3><a href="#">Overall Stats</a></h3>
               </header>
-              <p>
-                Tempus cubilia ultrices tempor sagittis. Nisl fermentum consequat integer interdum.
-              </p>
-              <div class="row gtr-50">
-                <div class="col-4">
-                  <a href="#" class="image fit"><img src="images/pic10.jpg" alt="" /></a>
-                </div>
-                <div class="col-8">
-                  <h4>Nibh sed cubilia</h4>
-                  <p>
-                    Amet nullam fringilla nibh nulla convallis tique ante proin.
-                  </p>
-                </div>
-                <div class="col-4">
-                  <a href="#" class="image fit"><img src="images/pic11.jpg" alt="" /></a>
-                </div>
-                <div class="col-8">
-                  <h4>Proin sed adipiscing</h4>
-                  <p>
-                    Amet nullam fringilla nibh nulla convallis tique ante proin.
-                  </p>
-                </div>
-                <div class="col-4">
-                  <a href="#" class="image fit"><img src="images/pic12.jpg" alt="" /></a>
-                </div>
-                <div class="col-8">
-                  <h4>Lorem feugiat magna</h4>
-                  <p>
-                    Amet nullam fringilla nibh nulla convallis tique ante proin.
-                  </p>
-                </div>
-                <div class="col-4">
-                  <a href="#" class="image fit"><img src="images/pic13.jpg" alt="" /></a>
-                </div>
-                <div class="col-8">
-                  <h4>Sed tempus fringilla</h4>
-                  <p>
-                    Amet nullam fringilla nibh nulla convallis tique ante proin.
-                  </p>
-                </div>
-                <div class="col-4">
-                  <a href="#" class="image fit"><img src="images/pic14.jpg" alt="" /></a>
-                </div>
-                <div class="col-8">
-                  <h4>Malesuada fermentum</h4>
-                  <p>
-                    Amet nullam fringilla nibh nulla convallis tique ante proin.
-                  </p>
-                </div>
-              </div>
-              <footer>
-                <a href="#" class="button">Magna Adipiscing</a>
-              </footer>
+              <p>Wins: {{overallWins}}</p>
+              <p>Losses: {{overallLoss}}</p>
+              <p>Win Pct: {{(overallWins / (overallWins + overallLoss)).toFixed(3)}}</p>
+              <p>Wild Card Apperances: {{wildcardApps}}</p>
+              <p>Division Titles: {{divTitles}}</p>
+              <p>League Pennants: {{leaguePens}}</p>
+              <p>World Series Titles: {{worldSeriesTitles}}</p>
             </section>
-          </div>
+          </div> -->
           <div class="col-8 col-12-mobile imp-mobile" id="content">
             <article id="main">
               <header>
                 <h2><a href="#">{{ franchise.franch_name }}</a></h2>
-                <p>
-                  Morbi convallis lectus malesuada sed fermentum dolore amet
-                </p>
+                <p>Overall Stats</p>
+              <!-- <a href="#" class="image featured"><img src="images/pic06.jpg" alt="" /></a> -->
+              <h3>Wins: {{overallWins}} || Losses: {{overallLoss}} || Win Pct: {{(overallWins / (overallWins + overallLoss)).toFixed(3)}}</h3>
+              <!-- <p>Losses: {{overallLoss}}</p> -->
+              <!-- <p>Win Pct: {{(overallWins / (overallWins + overallLoss)).toFixed(3)}}</p> -->
+              <h3>Wild Card Apperances: {{wildcardApps}} || Division Titles: {{divTitles}}</h3>
+              <!-- <p>Division Titles: {{divTitles}}</p> -->
+              <h3>League Pennants: {{leaguePens}} || World Series Titles: {{worldSeriesTitles}}</h3>
+              <!-- <p>World Series Titles: {{worldSeriesTitles}}</p> -->
               </header>
-              <a href="#" class="image featured"><img src="images/pic06.jpg" alt="" /></a>
-              <p>
-                Commodo id natoque malesuada sollicitudin elit suscipit. Curae suspendisse mauris posuere accumsan massa
-                posuere lacus convallis tellus interdum. Amet nullam fringilla nibh nulla convallis ut venenatis purus
-                lobortis. Auctor etiam porttitor phasellus tempus cubilia ultrices tempor sagittis. Nisl fermentum
-                consequat integer interdum integer purus sapien. Nibh eleifend nulla nascetur pharetra commodo mi augue
-                interdum tellus. Ornare cursus augue feugiat sodales velit lorem. Semper elementum ullamcorper lacinia
-                natoque aenean scelerisque vel lacinia mollis quam sodales congue.
-              </p>
               <section>
                 <table class="default">
                   <thead>
@@ -120,7 +71,7 @@
                     <th>Team</th>
                     <th>Wins</th>
                     <th>Losses</th>
-                    <!-- <th>Winning Pct</th> -->
+                    <th>Win Pct</th>
                     <th>Wild Card</th>
                     <th>Division</th>
                     <th>League</th>
@@ -131,13 +82,11 @@
                     <td>{{stat.name}}</td>
                     <td>{{stat.w}}</td>
                     <td>{{stat.l}}</td>
-                    <!-- <td>{{stat.win_pct}}</td> -->
+                    <td>{{(stat.w / (stat.w + stat.l)).toFixed(3)}}</td>
                     <td>{{stat.wc_win}}</td>
                     <td>{{stat.div_win}}</td>
                     <td>{{stat.lg_win}}</td>
                     <td>{{stat.ws_win}}</td>
-                    <!-- decide what else to display on this page as opposed to stats pages
-                    maybe winning pct, division/league/world series titles -->
                   </tr>
                 </table>
               </section>
@@ -160,13 +109,34 @@ export default {
     return {
       message: "Franchise Stats",
       franchise: {},
-      games: {},
+      overallWins: 0,
+      overallLoss: 0,
+      wildcardApps: 0,
+      divTitles: 0,
+      leaguePens: 0,
+      worldSeriesTitles: 0
     };
   },
   created: function() {
     axios.get(`/api/franchises/${this.$route.params.franch_id}`).then(response => {
       console.log(response.data);
       this.franchise = response.data;
+      this.franchise.stats.forEach(year => {
+        this.overallWins += parseInt(year.w);
+        this.overallLoss += parseInt(year.l);
+        if (year.wc_win === "Y") {
+          this.wildcardApps += 1;
+        }
+        if (year.div_win === "Y") {
+          this.divTitles += 1;
+        }
+        if (year.lg_win === "Y") {
+          this.leaguePens += 1;
+        }
+        if (year.ws_win === "Y") {
+          this.worldSeriesTitles += 1;
+        }
+      });
     });
   },
   methods: {}

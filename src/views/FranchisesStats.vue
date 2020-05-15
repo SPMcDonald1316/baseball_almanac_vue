@@ -21,7 +21,7 @@
 
       <div class="container">
         <div class="row gtr-200">
-          <div class="col-4 col-12-mobile" id="sidebar">
+          <!-- <div class="col-4 col-12-mobile" id="sidebar">
             <hr class="first" />
             <section>
               <header>
@@ -95,7 +95,7 @@
                 <a href="#" class="button">Magna Adipiscing</a>
               </footer>
             </section>
-          </div>
+          </div> -->
           <div class="col-8 col-12-mobile imp-mobile" id="content">
             <article id="main">
               <header>
@@ -193,7 +193,7 @@
                   </thead>
                   <tr v-bind:key="game.id" v-for="game in games">
                     <td><a v-bind:href="`/games/${game.game_id}`">{{game.game_date}}</a></td>
-                    <td>{{game.home_team}} vs. {{game.away_team}}</td>
+                    <td>{{game.home_team[0]}} vs. {{game.away_team}}</td>
                   </tr>
                 </table>
               </section>
