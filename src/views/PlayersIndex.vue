@@ -28,9 +28,6 @@
                 <h3>Filter players on page:</h3>
               </header>
               <p><input type="text" v-model="playerFilter"></p>
-              <footer>
-                <a href="#" class="button">Learn More</a>
-              </footer>
             </section>
             <hr />
           </div>
@@ -42,13 +39,16 @@
                   List of Major League Players sorted by last name.
                 </p>
               </header>
-              <section v-bind:key="player.id" v-for="player in filterBy(players, playerFilter, 'name')">
+              <section v-bind:key="item.id" v-for="item in filterBy(pageOfItems, playerFilter, 'name')">
                 <header>
-                  <h3><router-link :to="{name: 'players-show', params: {id: player.id}}">{{ player.name }}</router-link></h3>
+                  <h3><router-link :to="{name: 'players-show', params: {id: item.id}}">{{ item.name }}</router-link></h3>
                 </header>
-                <p>Debut: {{ player.debut }}</p>
-                <p>Final Game: {{ player.final_game }}</p>
+                <p>Debut: {{ item.debut }}</p>
+                <p>Final Game: {{ item.final_game }}</p>
               </section>
+              <div>
+                <jw-pagination v-bind:items="players" v-bind:pageSize="100" @changePage="onChangePage"></jw-pagination>
+              </div>
             </article>
           </div>
         </div>
@@ -64,12 +64,14 @@
 <script>
 import axios from "axios";
 import Vue2Filters from 'vue2-filters';
+import JwPagination from 'jw-vue-pagination';
 export default {
   mixins: [Vue2Filters.mixin],
   data: function() {
     return {
       message: "Players",
       players: [],
+      pageOfItems: [],
       playerFilter: ""
     };
   },
@@ -79,6 +81,11 @@ export default {
       this.players = response.data;
     });
   },
-  methods: {}
+  methods: {
+    onChangePage(pageOfItems) {
+    // update page of items
+      this.pageOfItems = pageOfItems;
+    }
+  }
 };
 </script>

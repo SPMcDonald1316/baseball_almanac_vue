@@ -21,48 +21,14 @@
 
       <div class="container">
         <div class="row gtr-200">
-          <!-- <div class="col-4 col-12-mobile" id="sidebar">
-            <hr class="first" />
-            <section>
-              <header>
-                <h3><a href="#">Accumsan sed penatibus</a></h3>
-              </header>
-              <p>
-                Dolor sed fringilla nibh nulla convallis tique ante proin sociis accumsan lobortis. Auctor etiam
-                porttitor phasellus tempus cubilia ultrices tempor sagittis  tellus ante diam nec penatibus dolor cras
-                magna tempus feugiat veroeros.
-              </p>
-              <footer>
-                <a href="#" class="button">Learn More</a>
-              </footer>
-            </section>
-            <hr />
-            <section>
-              <header>
-                <h3><a href="#">Overall Stats</a></h3>
-              </header>
-              <p>Wins: {{overallWins}}</p>
-              <p>Losses: {{overallLoss}}</p>
-              <p>Win Pct: {{(overallWins / (overallWins + overallLoss)).toFixed(3)}}</p>
-              <p>Wild Card Apperances: {{wildcardApps}}</p>
-              <p>Division Titles: {{divTitles}}</p>
-              <p>League Pennants: {{leaguePens}}</p>
-              <p>World Series Titles: {{worldSeriesTitles}}</p>
-            </section>
-          </div> -->
           <div class="col-8 col-12-mobile imp-mobile" id="content">
             <article id="main">
               <header>
                 <h2><a href="#">{{ franchise.franch_name }}</a></h2>
                 <p>Overall Stats</p>
-              <!-- <a href="#" class="image featured"><img src="images/pic06.jpg" alt="" /></a> -->
               <h3>Wins: {{overallWins}} || Losses: {{overallLoss}} || Win Pct: {{(overallWins / (overallWins + overallLoss)).toFixed(3)}}</h3>
-              <!-- <p>Losses: {{overallLoss}}</p> -->
-              <!-- <p>Win Pct: {{(overallWins / (overallWins + overallLoss)).toFixed(3)}}</p> -->
               <h3>Wild Card Apperances: {{wildcardApps}} || Division Titles: {{divTitles}}</h3>
-              <!-- <p>Division Titles: {{divTitles}}</p> -->
               <h3>League Pennants: {{leaguePens}} || World Series Titles: {{worldSeriesTitles}}</h3>
-              <!-- <p>World Series Titles: {{worldSeriesTitles}}</p> -->
               </header>
               <section>
                 <table class="default">

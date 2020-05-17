@@ -96,6 +96,9 @@
               <header>
                 <h2>{{ player.name }}</h2>
               </header>
+              <p>Display Stats</p> 
+              <input type="checkbox" name="battingStats" value="true">
+              <label for="battingStats">Batting</label>
               <section v-if="player.hitting_stats && player.hitting_stats.length > 0">
                 <header>
                   <h3>Regular Season Batting</h3>
@@ -104,11 +107,10 @@
                   <thead>
                     <th>Year</th>
                     <th>Team</th>
-                    <th>League</th>
-                    <th>Games</th>
-                    <th>At Bats</th>
-                    <th>Runs</th>
-                    <th>Hits</th>
+                    <th>G</th>
+                    <th>AB</th>
+                    <th>R</th>
+                    <th>H</th>
                     <th>2B</th>
                     <th>3B</th>
                     <th>HR</th>
@@ -119,14 +121,13 @@
                     <th>SO</th>
                     <th>IBB</th>
                     <th>HBP</th>
-                    <th>Sac Hits</th>
-                    <th>Sac Fly</th>
+                    <th>SH</th>
+                    <th>SF</th>
                     <th>GIDP</th>
                   </thead>
                   <tr v-bind:key="stat.id" v-for="stat in player.hitting_stats">
                     <td>{{stat.year_id}}</td>
                     <td>{{stat.team_id}}</td>
-                    <td>{{stat.lg_id}}</td>
                     <td>{{stat.g}}</td>
                     <td>{{stat.ab}}</td>
                     <td>{{stat.r}}</td>
@@ -155,11 +156,10 @@
                   <thead>
                     <th>Year</th>
                     <th>Team</th>
-                    <th>League</th>
-                    <th>Games</th>
-                    <th>At Bats</th>
-                    <th>Runs</th>
-                    <th>Hits</th>
+                    <th>G</th>
+                    <th>AB</th>
+                    <th>R</th>
+                    <th>H</th>
                     <th>2B</th>
                     <th>3B</th>
                     <th>HR</th>
@@ -170,14 +170,13 @@
                     <th>SO</th>
                     <th>IBB</th>
                     <th>HBP</th>
-                    <th>Sac Hits</th>
-                    <th>Sac Fly</th>
+                    <th>SH</th>
+                    <th>SF</th>
                     <th>GIDP</th>
                   </thead>
                   <tr v-bind:key="stat.id" v-for="stat in player.post_hitting">
                     <td>{{stat.year_id}}</td>
                     <td>{{stat.team_id}}</td>
-                    <td>{{stat.lg_id}}</td>
                     <td>{{stat.g}}</td>
                     <td>{{stat.ab}}</td>
                     <td>{{stat.r}}</td>
@@ -206,7 +205,6 @@
                   <thead>
                     <th>Year</th>
                     <th>Team</th>
-                    <th>League</th>
                     <th>W</th>
                     <th>L</th>
                     <th>G</th>
@@ -226,12 +224,11 @@
                     <th>IBB</th>
                     <th>WP</th>
                     <th>HBP</th>
-                    <th>Balks</th>
+                    <th>Bks</th>
                   </thead>
                   <tr v-bind:key="stat.id" v-for="stat in player.pitching_stats">
                     <td>{{stat.year_id}}</td>
                     <td>{{stat.team_id}}</td>
-                    <td>{{stat.lg_id}}</td>
                     <td>{{stat.w}}</td>
                     <td>{{stat.l}}</td>
                     <td>{{stat.g}}</td>
@@ -263,7 +260,6 @@
                   <thead>
                     <th>Year</th>
                     <th>Team</th>
-                    <th>League</th>
                     <th>W</th>
                     <th>L</th>
                     <th>G</th>
@@ -288,7 +284,6 @@
                   <tr v-bind:key="stat.id" v-for="stat in player.post_pitching">
                     <td>{{stat.year_id}}</td>
                     <td>{{stat.team_id}}</td>
-                    <td>{{stat.lg_id}}</td>
                     <td>{{stat.w}}</td>
                     <td>{{stat.l}}</td>
                     <td>{{stat.g}}</td>
@@ -320,7 +315,6 @@
                   <thead>
                     <th>Year</th>
                     <th>Team</th>
-                    <th>League</th>
                     <th>POS</th>
                     <th>G</th>
                     <th>GS</th>
@@ -336,7 +330,6 @@
                   <tr v-bind:key="stat.id" v-for="stat in player.fielding_stats">
                     <td>{{stat.year_id}}</td>
                     <td>{{stat.team_id}}</td>
-                    <td>{{stat.lg_id}}</td>
                     <td>{{stat.pos}}</td>
                     <td>{{stat.g}}</td>
                     <td>{{stat.gs}}</td>
@@ -359,7 +352,6 @@
                   <thead>
                     <th>Year</th>
                     <th>Team</th>
-                    <th>League</th>
                     <th>POS</th>
                     <th>G</th>
                     <th>GS</th>
@@ -375,7 +367,6 @@
                   <tr v-bind:key="stat.id" v-for="stat in player.post_fielding">
                     <td>{{stat.year_id}}</td>
                     <td>{{stat.team_id}}</td>
-                    <td>{{stat.lg_id}}</td>
                     <td>{{stat.pos}}</td>
                     <td>{{stat.g}}</td>
                     <td>{{stat.gs}}</td>

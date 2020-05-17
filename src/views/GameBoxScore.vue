@@ -24,20 +24,22 @@
           <div class="col-8 col-12-mobile imp-mobile" id="content">
             <article id="main">
               <header>
-                <h2>{{game[0].away_team}} @ {{game[0].home_team[0]}}</h2>
-                <p>{{ game[0].home_team[1]}}</p>
-                <p>{{game[0].game_date}}</p>
+                <h2>{{awayTeam}} @ {{homeTeam}}</h2>
+                <p v-if="homeScore > awayScore">{{homeTeam}}: {{homeScore}}   {{awayTeam}}: {{awayScore}}  Final</p>
+                <p v-else >{{awayTeam}}: {{awayScore}}   {{homeTeam}}: {{homeScore}}  Final</p>
+                <p>{{ this.game[0].home_team[1]}}</p>
+                <p>{{this.game[0].game_date}}</p>
               </header>
               <table class=default>
                 <thead>
                   <th>Inning</th>
-                  <!-- <th v-bind:key="inning.id" v-for="inning in innings">{{inning}}</th> -->
+                  <th v-bind:key="inning.id" v-for="inning in innings">{{inning}}</th>
                 </thead>
                 <tr>
-                  <th>Away</th>
+                  <th>{{awayTeam}}</th>
                 </tr>
                 <tr>
-                  <th>Home</th>
+                  <th>{{homeTeam}}</th>
                 </tr>
               </table>
               <section>
@@ -72,42 +74,14 @@
             <hr class="first" />
             <section>
               <header>
-                <h3>
-                  
-                </h3>
-              </header>
-              <p>
-
-
-
-
-              </p>
-            </section>
-            <section>
-              <header>
-                <h3>
-
-                </h3>
-              </header>
-              <p>
-
-
-
-
-              </p>
-            </section>
-            <section>
-              <header>
-                <h3>{{game[0].away_team}} Lineup</h3>
+                <h3>{{awayTeam}} Lineup</h3>
               </header>
               <ul>
                 <li v-bind:key="player.id" v-for="player in awayLineup">{{player}}</li>
               </ul>
-            </section>
             <hr />
-            <section>
               <header>
-                <h3>{{game[0].home_team[0]}} Lineup</h3>
+                <h3>{{homeTeam}} Lineup</h3>
               </header>
               <ul>
                 <li v-bind:key="player.id" v-for="player in homeLineup">{{player}}</li>
@@ -129,16 +103,21 @@ import axios from "axios";
 export default {
   data: function() {
     return {
-      message: "Game Box Score",
-      game: {},
+      game: [],
       homeLineup: [],
-      awayLineup: []
+      awayLineup: [],
+      innings: [],
+      inningScore: [],
+      homeTeam: "",
+      homeScore: 0,
+      awayTeam: "",
+      awayScore: 0
     };
   },
   created: function() {
     axios.get(`/api/games/${this.$route.params.game_id}`).then(response => {
-      console.log(response.data);
       this.game = response.data;
+      console.log(this.game);
       for (let i = 0; i < this.game.length; i++) {
         if (this.game[i].batting === this.game[i].away_team) {
           if (this.awayLineup.length === 0) {
@@ -165,6 +144,21 @@ export default {
           }
         }
       }
+      this.innings.push(this.game[0].inning);
+      for (let i = 0; i < this.game.length; i++) {
+        if (this.innings.includes(this.game[i].inning)) {
+          i++;
+        } else {
+          this.innings.push(this.game[i].inning);
+        }
+      }
+      // for (let i = 0; i < this.game.length; i++) {
+        
+      // }
+      this.homeTeam = this.game[0].home_team[0];
+      this.homeScore = parseInt(this.game[this.game.length - 1].home_score);
+      this.awayTeam = this.game[0].away_team;
+      this.awayScore = parseInt(this.game[this.game.length - 1].away_score);
     });
   },
   methods: {}

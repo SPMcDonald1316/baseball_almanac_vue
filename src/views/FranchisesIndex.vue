@@ -107,14 +107,16 @@
                   List of Major League Franchises
                 </p>
               </header>
-              <!-- <a href="#" class="image featured"><img src="images/pic06.jpg" alt="" /></a> -->
-              <p>Search For Team: <input type="text" v-model="teamFilter"></p>
-              <section v-bind:key="franchise.id" v-for="franchise in filterBy(franchises, teamFilter, 'franch_name')">
+              <p>Search For Team on page: <input type="text" v-model="teamFilter"></p>
+              <section v-bind:key="item.id" v-for="item in filterBy(pageOfItems, teamFilter, 'franch_name')">
                 <header>
-                  <h3><a v-bind:href="`/franchises/${franchise.franch_id}`">{{ franchise.franch_name }}</a></h3>
+                  <h3><a v-bind:href="`/franchises/${item.franch_id}`">{{ item.franch_name }}</a></h3>
                 </header>
-                <p>{{ franchise.franch_id }}</p>
+                <p>{{ item.franch_id }}</p>
               </section>
+              <div>
+                <jw-pagination v-bind:items="franchises" v-bind:pageSize="40" @changePage="onChangePage"></jw-pagination>
+              </div>
             </article>
           </div>
         </div>
@@ -130,12 +132,14 @@
 <script>
 import axios from "axios";
 import Vue2Filters from 'vue2-filters';
+import JwPagination from 'jw-vue-pagination';
 export default {
   mixins: [Vue2Filters.mixin],
   data: function() {
     return {
       message: "Franchises",
       franchises: [],
+      pageOfItems: [],
       teamFilter: ""
     };
   },
@@ -145,6 +149,11 @@ export default {
       this.franchises = response.data;
     });
   },
-  methods: {}
+  methods: {
+    onChangePage(pageOfItems) {
+    // update page of items
+      this.pageOfItems = pageOfItems;
+    }
+  }
 };
 </script>
