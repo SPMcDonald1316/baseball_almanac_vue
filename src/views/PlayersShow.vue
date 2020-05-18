@@ -383,6 +383,8 @@
               </section>
             </article>
           </div>
+          <div id="container" style="width:50%; height:400px;"></div>
+          <div id="container2" style="width:50%; height:400px;"></div>
         </div>
 
       </div>
@@ -397,6 +399,7 @@
 
 <script>
 import axios from "axios";
+import Highcharts from "highcharts";
 export default {
   data: function() {
     return {
@@ -413,4 +416,29 @@ export default {
   },
   methods: {}
 };
+document.addEventListener('DOMContentLoaded', function() {
+  var myChart = Highcharts.chart('container', 'container2', {
+    chart: {
+      type: 'col',
+    },
+    title: {
+      text: 'Fruit Consumption'
+    },
+    xAxis: {
+      categories: ['Apples', 'Bananas', 'Oranges']
+    },
+    yAxis: {
+      title: {
+        text: 'Fruit eaten'
+      }
+    },
+    series: [{
+      name: 'Jane',
+      data: [1, 0, 4]
+    }, {
+      name: 'John',
+      data: [5, 7, 3]
+    }]
+  });
+});
 </script>

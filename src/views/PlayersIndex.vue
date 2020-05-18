@@ -30,6 +30,12 @@
               <p><input type="text" v-model="playerFilter"></p>
             </section>
             <hr />
+            <section>
+              <header>
+                <h3>Search Players By Last Names</h3>
+              </header>
+              <p>[ <a v-bind:href="`/players/${letter}`" v-bind:key="letter" v-for="letter in lastNameStartsWith"> {{ letter }} | </a> ]</p>
+            </section>
           </div>
           <div class="col-8 col-12-mobile imp-mobile" id="content">
             <article id="main">
@@ -41,13 +47,13 @@
               </header>
               <section v-bind:key="item.id" v-for="item in filterBy(pageOfItems, playerFilter, 'name')">
                 <header>
-                  <h3><router-link :to="{name: 'players-show', params: {id: item.id}}">{{ item.name }}</router-link></h3>
+                  <h3><router-link :to="{name: 'players-show', params: { id: item.id }}">{{ item.name }}</router-link></h3>
                 </header>
                 <p>Debut: {{ item.debut }}</p>
                 <p>Final Game: {{ item.final_game }}</p>
               </section>
               <div>
-                <jw-pagination v-bind:items="players" v-bind:pageSize="100" @changePage="onChangePage"></jw-pagination>
+                <jw-pagination v-bind:items="players" v-bind:pageSize="50" @changePage="onChangePage"></jw-pagination>
               </div>
             </article>
           </div>
@@ -72,7 +78,8 @@ export default {
       message: "Players",
       players: [],
       pageOfItems: [],
-      playerFilter: ""
+      playerFilter: "",
+      lastNameStartsWith: []
     };
   },
   created: function() {
@@ -80,6 +87,11 @@ export default {
       console.log(response.data);
       this.players = response.data;
     });
+    let aplhabet = 'abcdefghijklmnopqrstuvwxyz';
+    for (let i = 0; i < aplhabet.length; i++) {
+      let letter = aplhabet[i].toUpperCase();
+      this.lastNameStartsWith.push(letter);
+    }
   },
   methods: {
     onChangePage(pageOfItems) {
