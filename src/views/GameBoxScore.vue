@@ -159,15 +159,15 @@ export default {
       }
       return this.awayLineup;
     },
-  //   createBoxScore: function() {
-  //     this.innings.push(this.game[0].inning);
-  //     for (let i = 0; i < this.game.length; i++) {
-  //       if (this.innings.includes(this.game[i].inning)) {
-  //         i++;
-  //       } else {
-  //         this.innings.push(this.game[i].inning);
-  //       }
-  //     }
+    //   createBoxScore: function() {
+    //     this.innings.push(this.game[0].inning);
+    //     for (let i = 0; i < this.game.length; i++) {
+    //       if (this.innings.includes(this.game[i].inning)) {
+    //         i++;
+    //       } else {
+    //         this.innings.push(this.game[i].inning);
+    //       }
+    //     }
 
   //     for (let i = 0; i < this.game.length; i++) {
   //       if (this.game[i].batting === this.awayTeam) {
