@@ -33,6 +33,20 @@
               <p>Final Game: {{ player.final_game }}</p>
               <p v-if="player.halloffame">Year Inducted Into Hall Of Fame: {{player.halloffame.year_id}}</p>
             </section>
+            <section>
+              <header>
+                <h3>Display Stats</h3>
+              </header>
+              <div>
+                <button v-on:click="displayBatting()">Batting Stats</button> 
+              </div>
+              <div>
+                <button v-on:click="displayPitching()">Pitching Stats</button> 
+              </div>
+              <div>
+                <button v-on:click="displayFielding()">Fielding Stats</button> 
+              </div>
+              </section>
             <hr />
             <section>
               <header>
@@ -97,9 +111,8 @@
                 <h2>{{ player.name }}</h2>
               </header>
               <p>Display Stats</p> 
-              <input type="checkbox" name="battingStats" value="true">
-              <label for="battingStats">Batting</label>
-              <section v-if="player.hitting_stats && player.hitting_stats.length > 0">
+  
+              <section v-if="player.hitting_stats && player.hitting_stats.length > 0 && batClicked === true">
                 <header>
                   <h3>Regular Season Batting</h3>
                 </header>
@@ -148,7 +161,7 @@
                   </tr>
                 </table>
               </section>
-              <section v-if="player.post_hitting && player.post_hitting.length > 0">
+              <section v-if="player.post_hitting && player.post_hitting.length > 0 && batClicked === true">
                 <header>
                   <h3>Post Season Batting</h3>
                 </header>
@@ -197,7 +210,7 @@
                   </tr>
                 </table>
               </section>
-              <section v-if="player.pitching_stats && player.pitching_stats.length > 0">
+              <section v-if="player.pitching_stats && player.pitching_stats.length > 0 && pitClicked === true">
                 <header>
                   <h3>Regular Season Pitching</h3>
                 </header>
@@ -252,7 +265,7 @@
                   </tr>
                 </table>
               </section>
-              <section v-if="player.post_pitching && player.post_pitching.length > 0">
+              <section v-if="player.post_pitching && player.post_pitching.length > 0 && pitClicked === true">
                 <header>
                   <h3>Post Season Pitching</h3>
                 </header>
@@ -307,7 +320,7 @@
                   </tr>
                 </table>
               </section>
-              <section v-if="player.fielding_stats && player.fielding_stats.length > 0">
+              <section v-if="player.fielding_stats && player.fielding_stats.length > 0 && fieldClicked === true">
                 <header>
                   <h3>Regular Season Fielding</h3>
                 </header>
@@ -344,7 +357,7 @@
                   </tr>
                 </table>
               </section>
-              <section v-if="player.post_fielding && player.post_fielding.length > 0">
+              <section v-if="player.post_fielding && player.post_fielding.length > 0 && fieldClicked === true">
                 <header>
                   <h3>Post Season Fielding</h3>
                 </header>
@@ -381,11 +394,11 @@
                   </tr>
                 </table>
               </section>
+              <div id="container1" style="width:100%; height:400px;"></div>
+              <div id="container2" style="width:100%; height:400px;"></div>
+              <div id="container3" style="width:100%; height:400px;"></div>
             </article>
           </div>
-          <div id="container1" style="width:100%; height:400px;"></div>
-          <div id="container2" style="width:100%; height:400px;"></div>
-          <div id="container3" style="width:100%; height:400px;"></div>
         </div>
 
       </div>
@@ -422,7 +435,10 @@ export default {
       playerHR9: [],
       playerERA: [],
       playerRA9: [],
-      playerWHIP: []
+      playerWHIP: [],
+      pitClicked: false,
+      batClicked: false,
+      fieldClicked: false
     };
   },
   created: function() {
@@ -432,9 +448,11 @@ export default {
       if (this.player.fielding_stats[0].pos === 'P') {
         this.pitStats();
         this.makePitcherChart();
+        this.pitClicked = true;
       } else {
         this.hitStats();
         this.makeHitterChart();
+        this.batClicked = true;
       }
     });
   },
@@ -667,6 +685,25 @@ export default {
           data: this.playerBBRate
         }]
       });
+    },
+    displayBatting: function() {
+      this.batClicked = !this.batClicked;
+      this.pitClicked = false;
+      this.fieldClicked = false;
+      this.hitStats();
+      this.makeHitterChart();
+    },
+    displayPitching: function() {
+      this.pitClicked = !this.pitClicked;
+      this.batClicked = false;
+      this.fieldClicked = false;
+      this.pitStats();
+      this.makePitcherChart();
+    },
+    displayFielding: function() {
+      this.fieldClicked = !this.fieldClicked;
+      this.batClicked = false;
+      this.pitClicked = false;
     }
   },
 };
