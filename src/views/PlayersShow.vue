@@ -383,8 +383,9 @@
               </section>
             </article>
           </div>
-          <div id="container" style="width:100%; height:400px;"></div>
+          <div id="container1" style="width:100%; height:400px;"></div>
           <div id="container2" style="width:100%; height:400px;"></div>
+          <div id="container3" style="width:100%; height:400px;"></div>
         </div>
 
       </div>
@@ -413,11 +414,13 @@ export default {
       playerBA: [],
       playerOBP: [],
       playerSLG: [],
+      playerKRate: [],
+      playerBBRate: [],
     };
   },
   created: function() {
     axios.get(`/api/player/${this.$route.params.id}`).then(response => {
-      console.log(response.data);
+      // console.log(response.data);
       this.player = response.data;
       // console.log(this.player);
       this.hitStats();
@@ -433,15 +436,19 @@ export default {
         this.playerDoubles.push(parseInt(year.doubles));
         this.playerTriples.push(parseInt(year.triples));
         this.playerHR.push(parseInt(year.hr));
-        this.playerBA.push(parseFloat((parseInt(year.h) / parseInt(year.ab)).toPrecision(3)));
+        let ba = parseFloat((parseInt(year.h) / parseInt(year.ab)).toPrecision(3));
+        this.playerBA.push(ba);
         this.playerOBP.push(parseFloat(((parseInt(year.h) + parseInt(year.bb) + parseInt(year.hbp)) / (parseInt(year.ab) + parseInt(year.bb) + parseInt(year.hbp) + parseInt(year.sf))).toPrecision(3)));
         this.playerSLG.push(parseFloat(
           ((singles + parseInt(year.doubles) * 2 + parseInt(year.triples) * 3 + parseInt(year.hr) * 4) / parseInt(year.ab)).toPrecision(3)
         ));
+        let pa = (parseInt(year.ab) + parseInt(year.bb) + parseInt(year.hbp) + parseInt(year.sh) + parseInt(year.sf));
+        this.playerKRate.push(parseFloat(((parseInt(year.so) / pa) * 100).toFixed(3)));
+        this.playerBBRate.push(parseFloat(((parseInt(year.bb) / pa) * 100).toFixed(3)));
       });
     },
     makeHitterChart: function() {
-      var hitbreakdownChart = Highcharts.chart('container', {
+      var hitbreakdownChart = Highcharts.chart('container1', {
         chart: {
           type: 'column'
         },
@@ -508,7 +515,7 @@ export default {
 
       var hitSlashLineChart = Highcharts.chart('container2', {
         chart: {
-          type: 'line'
+          type: 'spline'
         },
         title: {
           text: 'Yearly Slash Line'
@@ -525,6 +532,25 @@ export default {
         }, {
           name: 'SLG',
           data: this.playerSLG
+        }]
+      });
+
+      var hitRateStatChart = Highcharts.chart('container3', {
+        chart: {
+          type: 'line'
+        },
+        title: {
+          text: 'Rate Stats'
+        },
+        xAxis: {
+          categories: this.playerYears
+        },
+        series: [{
+          name: 'K Rate',
+          data: this.playerKRate
+        }, {
+          name: 'BB Rate',
+          data: this.playerBBRate
         }]
       });
     }

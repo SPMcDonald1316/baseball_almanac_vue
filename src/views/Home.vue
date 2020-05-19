@@ -6,7 +6,6 @@
           <header>
             <h1><a href="/" id="logo">Baseball Almanac</a></h1>
             <hr />
-            <p>Another fine freebie by HTML5 UP</p>
           </header>
           <footer>
             <a href="#features" class="button circled scrolly">Start</a>
