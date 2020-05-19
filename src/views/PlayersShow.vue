@@ -12,7 +12,7 @@
         <ul>
           <li><a href="/">Home</a></li>
           <li><a href="/franchises">Franchises</a></li>
-          <li><a href="/players">Players</a></li>
+          <li><a href="/players/A">Players</a></li>
           <li><a href="/about">About Me</a></li>
         </ul>
       </nav>
@@ -416,15 +416,26 @@ export default {
       playerSLG: [],
       playerKRate: [],
       playerBBRate: [],
+      playerSO9: [],
+      playerBB9: [],
+      playerH9: [],
+      playerHR9: [],
+      playerERA: [],
+      playerRA9: [],
+      playerWHIP: []
     };
   },
   created: function() {
     axios.get(`/api/player/${this.$route.params.id}`).then(response => {
       // console.log(response.data);
       this.player = response.data;
-      // console.log(this.player);
-      this.hitStats();
-      this.makeHitterChart();
+      if (this.player.fielding_stats[0].pos === 'P') {
+        this.pitStats();
+        this.makePitcherChart();
+      } else {
+        this.hitStats();
+        this.makeHitterChart();
+      }
     });
   },
   methods: {
@@ -445,6 +456,21 @@ export default {
         let pa = (parseInt(year.ab) + parseInt(year.bb) + parseInt(year.hbp) + parseInt(year.sh) + parseInt(year.sf));
         this.playerKRate.push(parseFloat(((parseInt(year.so) / pa) * 100).toFixed(3)));
         this.playerBBRate.push(parseFloat(((parseInt(year.bb) / pa) * 100).toFixed(3)));
+      });
+    },
+    pitStats: function() {
+      this.player.pitching_stats.forEach(year => {
+        this.playerYears.push(year.year_id);
+        let ip = parseFloat((parseInt(year.ip_outs) / 3).toFixed(2));
+        this.playerH9.push(parseFloat((parseInt(year.h) * 9 / ip).toFixed(1)));
+        this.playerHR9.push(parseFloat((parseInt(year.hr) * 9 / ip).toFixed(1)));
+        this.playerBB9.push(parseFloat((parseInt(year.bb) * 9 / ip).toFixed(1)));
+        this.playerSO9.push(parseFloat((parseInt(year.so) * 9 / ip).toFixed(1)));
+        this.playerERA.push(parseFloat(year.era));
+        this.playerWHIP.push(parseFloat(((parseInt(year.bb) + parseInt(year.h)) / ip).toFixed(3)));
+        this.playerRA9.push(parseFloat(((parseInt(year.r) * 9) / ip).toFixed(2)));
+        this.playerKRate.push(parseFloat(((parseInt(year.so) / parseInt(year.bfp)) * 100).toFixed(1)));
+        this.playerBBRate.push(parseFloat(((parseInt(year.bb) / parseInt(year.bfp)) * 100).toFixed(1)));
       });
     },
     makeHitterChart: function() {
@@ -537,7 +563,95 @@ export default {
 
       var hitRateStatChart = Highcharts.chart('container3', {
         chart: {
-          type: 'line'
+          type: 'spline'
+        },
+        title: {
+          text: 'Rate Stats'
+        },
+        xAxis: {
+          categories: this.playerYears
+        },
+        series: [{
+          name: 'K Rate',
+          data: this.playerKRate
+        }, {
+          name: 'BB Rate',
+          data: this.playerBBRate
+        }]
+      });
+    },
+    makePitcherChart: function() {
+      Highcharts.chart('container1', {
+        chart: {
+          type: 'column'
+        },
+        title: {
+          text: 'Pitcher Per 9 Stats'
+        },
+        xAxis: {
+          categories: this.playerYears,
+          crosshair: true
+        },
+        yAxis: {
+          min: 0,
+          title: {
+            text: 'Per 9 Innings'
+          }
+        },
+        tooltip: {
+          headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+          pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+            '<td style="padding:0"><b>{point.y:.1f}</b></td></tr>',
+          footerFormat: '</table>',
+          shared: true,
+          useHTML: true
+        },
+        plotOptions: {
+          column: {
+            pointPadding: 0.2,
+            borderWidth: 0
+          }
+        },
+        series: [{
+          name: 'H9',
+          data: this.playerH9
+        }, {
+          name: 'HR9',
+          data: this.playerHR9
+        }, {
+          name: 'BB9',
+          data: this.playerBB9
+        }, {
+          name: 'SO9',
+          data: this.playerSO9
+        }]
+      });
+
+      var pitChart = Highcharts.chart('container2', {
+        chart: {
+          type: 'spline'
+        },
+        title: {
+          text: 'Pitcher Effectiveness'
+        },
+        xAxis: {
+          categories: this.playerYears
+        },
+        series: [{
+          name: 'ERA',
+          data: this.playerERA
+        }, {
+          name: 'RA9',
+          data: this.playerRA9
+        }, {
+          name: 'WHIP',
+          data: this.playerWHIP
+        }]
+      });
+
+      var hitRateStatChart = Highcharts.chart('container3', {
+        chart: {
+          type: 'spline'
         },
         title: {
           text: 'Rate Stats'
