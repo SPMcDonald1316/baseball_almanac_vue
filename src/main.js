@@ -3,6 +3,9 @@ import App from './App.vue';
 import router from './router';
 import axios from "axios";
 import JwPagination from 'jw-vue-pagination';
+import HighchartsVue from 'highcharts-vue';
+
+Vue.use < (HighchartsVue);
 
 Vue.component('jw-pagination', JwPagination);
 

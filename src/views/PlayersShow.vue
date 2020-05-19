@@ -383,8 +383,7 @@
               </section>
             </article>
           </div>
-          <div id="container" style="width:50%; height:400px;"></div>
-          <div id="container2" style="width:50%; height:400px;"></div>
+          <div id="container" style="width:100%; height:400px;"></div>
         </div>
 
       </div>
@@ -405,6 +404,11 @@ export default {
     return {
       message: "Player Stats",
       player: {},
+      playerYears: [],
+      playerSingles: [],
+      playerDoubles: [],
+      playerTriples: [],
+      playerHR: [],
     };
   },
   created: function() {
@@ -412,33 +416,83 @@ export default {
       console.log(response.data);
       this.player = response.data;
       // console.log(this.player);
+      this.player.hitting_stats.forEach(year => {
+        this.playerYears.push(year.year_id);
+        this.playerSingles.push((parseInt(year.h) - parseInt(year.doubles) - parseInt(year.triples) - parseInt(year.hr)));
+        this.playerDoubles.push(parseInt(year.doubles));
+        this.playerTriples.push(parseInt(year.triples));
+        this.playerHR.push(parseInt(year.hr));
+      });
+      this.makeChart();
     });
   },
-  methods: {}
+  methods: {
+    makeChart: function() {
+      var myChart = Highcharts.chart('container', {
+        chart: {
+          type: 'column'
+        },
+        title: {
+          text: 'Season Hit Breakdown'
+        },
+        xAxis: {
+          categories: this.playerYears
+        },
+        yAxis: {
+          min: 0,
+          title: {
+            text: 'Hit Totals'
+          },
+          stackLabels: {
+            enabled: true,
+            style: {
+              fontWeight: 'bold',
+              color: ( // theme
+                Highcharts.defaultOptions.title.style &&
+                Highcharts.defaultOptions.title.style.color
+              ) || 'gray'
+            }
+          }
+        },
+        legend: {
+          align: 'right',
+          x: -30,
+          verticalAlign: 'top',
+          y: 25,
+          floating: true,
+          backgroundColor:
+                Highcharts.defaultOptions.legend.backgroundColor || 'white',
+          borderColor: '#CCC',
+          borderWidth: 1,
+          shadow: false
+        },
+        tooltip: {
+          headerFormat: '<b>{point.x}</b><br/>',
+          pointFormat: '{series.name}: {point.y}<br/>Total: {point.stackTotal}'
+        },
+        plotOptions: {
+          column: {
+            stacking: 'normal',
+            dataLabels: {
+              enabled: true
+            }
+          }
+        },
+        series: [{
+          name: 'Singles',
+          data: this.playerSingles
+        }, {
+          name: 'Doubles',
+          data: this.playerDoubles
+        }, {
+          name: 'Triples',
+          data: this.playerTriples
+        }, {
+          name: 'Home Runs',
+          data: this.playerHR
+        }]
+      });
+    }
+  },
 };
-document.addEventListener('DOMContentLoaded', function() {
-  var myChart = Highcharts.chart('container', 'container2', {
-    chart: {
-      type: 'col',
-    },
-    title: {
-      text: 'Fruit Consumption'
-    },
-    xAxis: {
-      categories: ['Apples', 'Bananas', 'Oranges']
-    },
-    yAxis: {
-      title: {
-        text: 'Fruit eaten'
-      }
-    },
-    series: [{
-      name: 'Jane',
-      data: [1, 0, 4]
-    }, {
-      name: 'John',
-      data: [5, 7, 3]
-    }]
-  });
-});
 </script>
