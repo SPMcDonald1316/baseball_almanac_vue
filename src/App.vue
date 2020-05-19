@@ -10,9 +10,9 @@
             <!-- Contact -->
               <section class="contact">
                 <header>
-                  <h3>Nisl turpis nascetur interdum?</h3>
+                  <h3>Baseball Almanac</h3>
                 </header>
-                <p>Urna nisl non quis interdum mus ornare ridiculus egestas ridiculus lobortis vivamus tempor aliquet.</p>
+                <p>Created by Sean McDonald.</p>
                 <ul class="icons">
                   <li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
                   <li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>

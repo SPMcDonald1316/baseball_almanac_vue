@@ -30,18 +30,20 @@
                 <p>{{ this.game[0].home_team[1]}}</p>
                 <p>{{this.game[0].game_date}}</p>
               </header>
-              <table class=default>
+              <!-- <table class=default>
                 <thead>
                   <th>Inning</th>
-                  <th v-bind:key="inning.id" v-for="inning in innings">{{inning}}</th>
+                  <th v-bind:key="inning.id" v-for="inning in innings">{{ inning }}</th>
                 </thead>
                 <tr>
                   <th>{{awayTeam}}</th>
+                  <td v-bind:key="awayScore" v-for="awayScore in awayInnScore">{{ awayScore }}</td>
                 </tr>
                 <tr>
                   <th>{{homeTeam}}</th>
+                  <td v-bind:key="homeScore" v-for="homeScore in homeInnScore">{{ homeScore }}</td>
                 </tr>
-              </table>
+              </table> -->
               <section>
                 <table class="default">
                   <thead>
@@ -106,8 +108,6 @@ export default {
       game: [],
       homeLineup: [],
       awayLineup: [],
-      innings: [],
-      inningScore: [],
       homeTeam: "",
       homeScore: 0,
       awayTeam: "",
@@ -118,19 +118,16 @@ export default {
     axios.get(`/api/games/${this.$route.params.game_id}`).then(response => {
       this.game = response.data;
       console.log(this.game);
-      for (let i = 0; i < this.game.length; i++) {
-        if (this.game[i].batting === this.game[i].away_team) {
-          if (this.awayLineup.length === 0) {
-            this.awayLineup.push(this.game[i].batter);
-          } else if (this.awayLineup.includes(this.game[i].batter)) {
-            i++;
-          } else if (this.awayLineup.length < 9) {
-            this.awayLineup.push(this.game[i].batter);
-          } else {
-            break;
-          }
-        }
-      }
+      this.homeTeam = this.game[0].home_team[0];
+      this.homeScore = parseInt(this.game[this.game.length - 1].home_score);
+      this.awayTeam = this.game[0].away_team;
+      this.awayScore = parseInt(this.game[this.game.length - 1].away_score);
+      this.createHomeLineup();
+      this.createAwayLineup();
+    });
+  },
+  methods: {
+    createHomeLineup: function() {
       for (let i = 0; i < this.game.length; i++) {
         if (this.game[i].batting === this.game[i].home_team[0]) {
           if (this.homeLineup.length === 0) {
@@ -144,23 +141,58 @@ export default {
           }
         }
       }
-      this.innings.push(this.game[0].inning);
+      return this.homeLineup;
+    },
+    createAwayLineup: function() {
       for (let i = 0; i < this.game.length; i++) {
-        if (this.innings.includes(this.game[i].inning)) {
-          i++;
-        } else {
-          this.innings.push(this.game[i].inning);
+        if (this.game[i].batting === this.game[i].away_team) {
+          if (this.awayLineup.length === 0) {
+            this.awayLineup.push(this.game[i].batter);
+          } else if (this.awayLineup.includes(this.game[i].batter)) {
+            i++;
+          } else if (this.awayLineup.length < 9) {
+            this.awayLineup.push(this.game[i].batter);
+          } else {
+            break;
+          }
         }
       }
-      // for (let i = 0; i < this.game.length; i++) {
-        
-      // }
-      this.homeTeam = this.game[0].home_team[0];
-      this.homeScore = parseInt(this.game[this.game.length - 1].home_score);
-      this.awayTeam = this.game[0].away_team;
-      this.awayScore = parseInt(this.game[this.game.length - 1].away_score);
-    });
-  },
-  methods: {}
+      return this.awayLineup;
+    },
+  //   createBoxScore: function() {
+  //     this.innings.push(this.game[0].inning);
+  //     for (let i = 0; i < this.game.length; i++) {
+  //       if (this.innings.includes(this.game[i].inning)) {
+  //         i++;
+  //       } else {
+  //         this.innings.push(this.game[i].inning);
+  //       }
+  //     }
+
+  //     for (let i = 0; i < this.game.length; i++) {
+  //       if (this.game[i].batting === this.awayTeam) {
+  //         let awaySc = 0;
+  //         if (i === 0) {
+  //           awaySc += parseInt(this.game[i].rbi);
+  //         } else if (this.game[i].inning === this.game[i - 1].inning) {
+  //           awaySc += parseInt(this.game[i].rbi);
+  //         } else {
+  //           this.awayInnScore.push(awaySc);
+  //           awaySc = parseInt(this.game[i].rbi);
+  //         }
+  //       } else if (this.game[i].batting === this.game[0].home_team[0]) {
+  //         let homeSc = 0;
+  //         if (this.game[i].inning === this.game[i - 1].inning) {
+  //           homeSc += parseInt(this.game[i].rbi);
+  //         } else {
+  //           this.homeInnScore.push(homeSc);
+  //           homeSc = parseInt(this.game[i].rbi);
+  //         }
+  //       }
+  //     }
+  //     console.log(this.awayInnScore);
+  //     console.log(this.homeInnScore);
+  //   }
+  }
 };
 </script>
