@@ -384,6 +384,7 @@
             </article>
           </div>
           <div id="container" style="width:100%; height:400px;"></div>
+          <div id="container2" style="width:100%; height:400px;"></div>
         </div>
 
       </div>
@@ -409,6 +410,9 @@ export default {
       playerDoubles: [],
       playerTriples: [],
       playerHR: [],
+      playerBA: [],
+      playerOBP: [],
+      playerSLG: [],
     };
   },
   created: function() {
@@ -416,19 +420,28 @@ export default {
       console.log(response.data);
       this.player = response.data;
       // console.log(this.player);
-      this.player.hitting_stats.forEach(year => {
-        this.playerYears.push(year.year_id);
-        this.playerSingles.push((parseInt(year.h) - parseInt(year.doubles) - parseInt(year.triples) - parseInt(year.hr)));
-        this.playerDoubles.push(parseInt(year.doubles));
-        this.playerTriples.push(parseInt(year.triples));
-        this.playerHR.push(parseInt(year.hr));
-      });
-      this.makeChart();
+      this.hitStats();
+      this.makeHitterChart();
     });
   },
   methods: {
-    makeChart: function() {
-      var myChart = Highcharts.chart('container', {
+    hitStats: function() {
+      this.player.hitting_stats.forEach(year => {
+        this.playerYears.push(year.year_id);
+        let singles = (parseInt(year.h) - parseInt(year.doubles) - parseInt(year.triples) - parseInt(year.hr));
+        this.playerSingles.push(singles);
+        this.playerDoubles.push(parseInt(year.doubles));
+        this.playerTriples.push(parseInt(year.triples));
+        this.playerHR.push(parseInt(year.hr));
+        this.playerBA.push(parseFloat((parseInt(year.h) / parseInt(year.ab)).toPrecision(3)));
+        this.playerOBP.push(parseFloat(((parseInt(year.h) + parseInt(year.bb) + parseInt(year.hbp)) / (parseInt(year.ab) + parseInt(year.bb) + parseInt(year.hbp) + parseInt(year.sf))).toPrecision(3)));
+        this.playerSLG.push(parseFloat(
+          ((singles + parseInt(year.doubles) * 2 + parseInt(year.triples) * 3 + parseInt(year.hr) * 4) / parseInt(year.ab)).toPrecision(3)
+        ));
+      });
+    },
+    makeHitterChart: function() {
+      var hitbreakdownChart = Highcharts.chart('container', {
         chart: {
           type: 'column'
         },
@@ -490,6 +503,28 @@ export default {
         }, {
           name: 'Home Runs',
           data: this.playerHR
+        }]
+      });
+
+      var hitSlashLineChart = Highcharts.chart('container2', {
+        chart: {
+          type: 'line'
+        },
+        title: {
+          text: 'Yearly Slash Line'
+        },
+        xAxis: {
+          categories: this.playerYears
+        },
+        series: [{
+          name: 'BA',
+          data: this.playerBA
+        }, {
+          name: 'OBP',
+          data: this.playerOBP
+        }, {
+          name: 'SLG',
+          data: this.playerSLG
         }]
       });
     }
