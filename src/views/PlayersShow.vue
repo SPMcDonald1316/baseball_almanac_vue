@@ -110,8 +110,6 @@
               <header>
                 <h2>{{ player.name }}</h2>
               </header>
-              <p>Display Stats</p> 
-  
               <section v-if="player.hitting_stats && player.hitting_stats.length > 0 && batClicked === true">
                 <header>
                   <h3>Regular Season Batting</h3>
@@ -394,10 +392,17 @@
                   </tr>
                 </table>
               </section>
-              <div id="container1" style="width:100%; height:400px;"></div>
-              <div id="container2" style="width:100%; height:400px;"></div>
-              <div id="container3" style="width:100%; height:400px;"></div>
             </article>
+            <div>
+              <div id="hitter1" style="width:100%; height:400px;"></div>
+              <div id="hitter2" style="width:100%; height:400px;"></div>
+              <div id="hitter3" style="width:100%; height:400px;"></div>
+            </div>
+            <div>
+              <div id="pitcher1" style="width:100%; height:400px;"></div>
+              <div id="pitcher2" style="width:100%; height:400px;"></div>
+              <div id="pitcher3" style="width:100%; height:400px;"></div>
+            </div>
           </div>
         </div>
 
@@ -427,8 +432,10 @@ export default {
       playerBA: [],
       playerOBP: [],
       playerSLG: [],
-      playerKRate: [],
-      playerBBRate: [],
+      hitterKRate: [],
+      hitterBBRate: [],
+      pitcherKRate: [],
+      pitcherBBRate: [],
       playerSO9: [],
       playerBB9: [],
       playerH9: [],
@@ -445,7 +452,7 @@ export default {
     axios.get(`/api/player/${this.$route.params.id}`).then(response => {
       // console.log(response.data);
       this.player = response.data;
-      if (this.player.fielding_stats[0].pos === 'P') {
+      if (this.player.fielding_stats[this.player.fielding_stats.length - 1].pos === 'P') {
         this.pitStats();
         this.makePitcherChart();
         this.pitClicked = true;
@@ -472,8 +479,9 @@ export default {
           ((singles + parseInt(year.doubles) * 2 + parseInt(year.triples) * 3 + parseInt(year.hr) * 4) / parseInt(year.ab)).toPrecision(3)
         ));
         let pa = (parseInt(year.ab) + parseInt(year.bb) + parseInt(year.hbp) + parseInt(year.sh) + parseInt(year.sf));
-        this.playerKRate.push(parseFloat(((parseInt(year.so) / pa) * 100).toFixed(3)));
-        this.playerBBRate.push(parseFloat(((parseInt(year.bb) / pa) * 100).toFixed(3)));
+        console.log(pa);
+        this.hitterKRate.push(parseFloat(((parseInt(year.so) / pa) * 100).toFixed(3)));
+        this.hitterBBRate.push(parseFloat(((parseInt(year.bb) / pa) * 100).toFixed(3)));
       });
     },
     pitStats: function() {
@@ -487,12 +495,12 @@ export default {
         this.playerERA.push(parseFloat(year.era));
         this.playerWHIP.push(parseFloat(((parseInt(year.bb) + parseInt(year.h)) / ip).toFixed(3)));
         this.playerRA9.push(parseFloat(((parseInt(year.r) * 9) / ip).toFixed(2)));
-        this.playerKRate.push(parseFloat(((parseInt(year.so) / parseInt(year.bfp)) * 100).toFixed(1)));
-        this.playerBBRate.push(parseFloat(((parseInt(year.bb) / parseInt(year.bfp)) * 100).toFixed(1)));
+        this.pitcherKRate.push(parseFloat(((parseInt(year.so) / parseInt(year.bfp)) * 100).toFixed(1)));
+        this.pitcherBBRate.push(parseFloat(((parseInt(year.bb) / parseInt(year.bfp)) * 100).toFixed(1)));
       });
     },
     makeHitterChart: function() {
-      var hitbreakdownChart = Highcharts.chart('container1', {
+      var hitbreakdownChart = Highcharts.chart('hitter1', {
         chart: {
           type: 'column'
         },
@@ -557,7 +565,7 @@ export default {
         }]
       });
 
-      var hitSlashLineChart = Highcharts.chart('container2', {
+      var hitSlashLineChart = Highcharts.chart('hitter2', {
         chart: {
           type: 'spline'
         },
@@ -579,7 +587,7 @@ export default {
         }]
       });
 
-      var hitRateStatChart = Highcharts.chart('container3', {
+      var hitRateStatChart = Highcharts.chart('hitter3', {
         chart: {
           type: 'spline'
         },
@@ -591,15 +599,15 @@ export default {
         },
         series: [{
           name: 'K Rate',
-          data: this.playerKRate
+          data: this.hitterKRate
         }, {
           name: 'BB Rate',
-          data: this.playerBBRate
+          data: this.hitterBBRate
         }]
       });
     },
     makePitcherChart: function() {
-      Highcharts.chart('container1', {
+      var perNineStats = Highcharts.chart('pitcher1', {
         chart: {
           type: 'column'
         },
@@ -645,7 +653,7 @@ export default {
         }]
       });
 
-      var pitChart = Highcharts.chart('container2', {
+      var pitChart = Highcharts.chart('pitcher2', {
         chart: {
           type: 'spline'
         },
@@ -667,7 +675,7 @@ export default {
         }]
       });
 
-      var hitRateStatChart = Highcharts.chart('container3', {
+      var pitRateStatChart = Highcharts.chart('pitcher3', {
         chart: {
           type: 'spline'
         },
@@ -679,10 +687,10 @@ export default {
         },
         series: [{
           name: 'K Rate',
-          data: this.playerKRate
+          data: this.pitcherKRate
         }, {
           name: 'BB Rate',
-          data: this.playerBBRate
+          data: this.pitcherBBRate
         }]
       });
     },
