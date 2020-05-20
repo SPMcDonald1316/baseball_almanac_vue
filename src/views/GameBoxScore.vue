@@ -26,7 +26,8 @@
               <header>
                 <h2>{{awayTeam}} @ {{homeTeam}}</h2>
                 <p v-if="homeScore > awayScore">{{homeTeam}}: {{homeScore}}   {{awayTeam}}: {{awayScore}}  Final</p>
-                <p v-else >{{awayTeam}}: {{awayScore}}   {{homeTeam}}: {{homeScore}}  Final</p>
+                <p v-else-if="awayScore === homeScore" >{{homeTeam}}: {{homeScore + parseInt(this.game[this.game.length - 1].rbi)}}   {{awayTeam}}: {{awayScore}}  Final</p>
+                <p v-else> {{awayTeam}}: {{awayScore}}   {{homeTeam}}: {{homeScore}} Final</p>
                 <p>{{ this.game[0].home_team[1]}}</p>
                 <p>{{this.game[0].game_date}}</p>
               </header>
@@ -37,11 +38,11 @@
                 </thead>
                 <tr>
                   <th>{{awayTeam}}</th>
-                  <td v-bind:key="awayScore" v-for="awayScore in awayInnScore">{{ awayScore }}</td>
+                  <td v-bind:key="awayScore.id" v-for="awayScore in awayInnScore">{{ awayScore }}</td>
                 </tr>
                 <tr>
                   <th>{{homeTeam}}</th>
-                  <td v-bind:key="homeScore" v-for="homeScore in homeInnScore">{{ homeScore }}</td>
+                  <td v-bind:key="homeScore.id" v-for="homeScore in homeInnScore">{{ homeScore }}</td>
                 </tr>
               </table> -->
               <section>
@@ -78,16 +79,16 @@
               <header>
                 <h3>{{awayTeam}} Lineup</h3>
               </header>
-              <ul>
+              <ol>
                 <li v-bind:key="player.id" v-for="player in awayLineup">{{player}}</li>
-              </ul>
+              </ol>
             <hr />
               <header>
                 <h3>{{homeTeam}} Lineup</h3>
               </header>
-              <ul>
+              <ol>
                 <li v-bind:key="player.id" v-for="player in homeLineup">{{player}}</li>
-              </ul>
+              </ol>
             </section>
           </div>
         </div>
@@ -108,6 +109,9 @@ export default {
       game: [],
       homeLineup: [],
       awayLineup: [],
+      innings: [],
+      awayInnScore: [],
+      homeInnScore: [],
       homeTeam: "",
       homeScore: 0,
       awayTeam: "",
@@ -124,6 +128,7 @@ export default {
       this.awayScore = parseInt(this.game[this.game.length - 1].away_score);
       this.createHomeLineup();
       this.createAwayLineup();
+      // this.createBoxScore();
     });
   },
   methods: {
@@ -159,40 +164,45 @@ export default {
       }
       return this.awayLineup;
     },
-    //   createBoxScore: function() {
-    //     this.innings.push(this.game[0].inning);
-    //     for (let i = 0; i < this.game.length; i++) {
-    //       if (this.innings.includes(this.game[i].inning)) {
-    //         i++;
+    // createBoxScore: function() {
+    //   this.innings.push(this.game[0].inning);
+    //   for (let i = 0; i < this.game.length; i++) {
+    //     if (this.innings.includes(this.game[i].inning)) {
+    //       i++;
+    //     } else {
+    //       this.innings.push(this.game[i].inning);
+    //     }
+    //   }
+    //   let awaySc = 0;
+    //   let homeSc = 0;
+    //   for (let i = 0; i < this.game.length; i++) {
+    //     if (this.game[i].batting === this.game[i].away_team) {
+    //       if (i === 0) {
+    //         awaySc += parseInt(this.game[i].rbi);
+    //       } else if (this.game[i].inning === this.game[i - 1].inning) {
+    //         awaySc += parseInt(this.game[i].rbi);
+    //       } else if (this.game[i + 1] === undefined) {
+    //         awaySc += parseInt(this.game[i].rbi);
+    //         this.homeInnScore.push(awaySc);
     //       } else {
-    //         this.innings.push(this.game[i].inning);
+    //         this.awayInnScore.push(awaySc);
+    //         awaySc = parseInt(this.game[i].rbi);
+    //       }
+    //     } else {
+    //       if (this.game[i].inning === this.game[i - 1].inning) {
+    //         homeSc += parseInt(this.game[i].rbi);
+    //       } else if (this.game[i + 1] === undefined) {
+    //         homeSc += parseInt(this.game[i].rbi);
+    //         this.homeInnScore.push(homeSc);
+    //       } else {
+    //         this.homeInnScore.push(homeSc);
+    //         homeSc = parseInt(this.game[i].rbi);
     //       }
     //     }
-
-  //     for (let i = 0; i < this.game.length; i++) {
-  //       if (this.game[i].batting === this.awayTeam) {
-  //         let awaySc = 0;
-  //         if (i === 0) {
-  //           awaySc += parseInt(this.game[i].rbi);
-  //         } else if (this.game[i].inning === this.game[i - 1].inning) {
-  //           awaySc += parseInt(this.game[i].rbi);
-  //         } else {
-  //           this.awayInnScore.push(awaySc);
-  //           awaySc = parseInt(this.game[i].rbi);
-  //         }
-  //       } else if (this.game[i].batting === this.game[0].home_team[0]) {
-  //         let homeSc = 0;
-  //         if (this.game[i].inning === this.game[i - 1].inning) {
-  //           homeSc += parseInt(this.game[i].rbi);
-  //         } else {
-  //           this.homeInnScore.push(homeSc);
-  //           homeSc = parseInt(this.game[i].rbi);
-  //         }
-  //       }
-  //     }
-  //     console.log(this.awayInnScore);
-  //     console.log(this.homeInnScore);
-  //   }
+    //   }
+    //   console.log(this.homeInnScore);
+    //   console.log(this.awayInnScore);
+    // }
   }
 };
 </script>
